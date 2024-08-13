@@ -1,5 +1,6 @@
 import 'package:eng_game_app/pages/chapter_page.dart';
 import 'package:eng_game_app/pages/home_page.dart';
+import 'package:eng_game_app/pages/lesson_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -14,10 +15,17 @@ Color menuCardShadow = const Color(0xFF808080).withOpacity(0.5);
 final Map<String, WidgetBuilder> routes = {
   "/": (context) => const HomePage(),
   "/chapter": (context) {
-    final args =
-        ModalRoute.of(context)!.settings.arguments as Map<String, String>;
+    final args = ModalRoute.of(context)!.settings.arguments as Map;
     return ChapterPage(
       chapterTitle: args["chapterTitle"]!,
+      data: args["data"],
+    );
+  },
+  "/lesson": (context) {
+    final args = ModalRoute.of(context)!.settings.arguments as Map;
+    return LessonPage(
+      lessonTitle: args["lessonTitle"],
+      data: args["data"],
     );
   },
 };

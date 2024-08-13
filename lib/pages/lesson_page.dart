@@ -1,25 +1,26 @@
 import 'package:eng_game_app/components/constants.dart';
-import 'package:eng_game_app/components/menu_card.dart';
+import 'package:eng_game_app/components/word_card.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class ChapterPage extends StatefulWidget {
-  String chapterTitle;
+class LessonPage extends StatefulWidget {
+  String lessonTitle;
   final data;
-  ChapterPage({
+  LessonPage({
     super.key,
-    required this.chapterTitle,
+    required this.lessonTitle,
     required this.data,
   });
 
   @override
-  State<ChapterPage> createState() => _ChapterPageState();
+  State<LessonPage> createState() => _LessonPageState();
 }
 
-class _ChapterPageState extends State<ChapterPage> {
+class _LessonPageState extends State<LessonPage> {
   @override
   Widget build(BuildContext context) {
-    List lessons = widget.data.keys.toList();
+    List words = widget.data.keys.toList();
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -33,23 +34,15 @@ class _ChapterPageState extends State<ChapterPage> {
           color: actionBackColor,
         ),
         title: Text(
-          widget.chapterTitle,
+          widget.lessonTitle,
         ),
       ),
       body: ListView.builder(
-        itemCount: lessons.length,
+        itemCount: words.length,
         itemBuilder: (context, index) {
-          return MenuCard(
-            title: lessons[index],
-            onPressed: () {
-              Navigator.of(context).pushNamed(
-                "/lesson",
-                arguments: {
-                  "lessonTitle": lessons[index],
-                  "data": widget.data[lessons[index]],
-                },
-              );
-            },
+          return WordCard(
+            word: words[index],
+            translation: widget.data[words[index]]![0].toString(),
           );
         },
       ),
