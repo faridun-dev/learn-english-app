@@ -26,32 +26,36 @@ class _HomePageState extends State<HomePage> {
     final database = _box.get("data");
     List chapters = database.keys.toList();
     return Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            "Изучение английского языка",
-            style: TextStyle(
-              color: appBarFontColor,
-              fontWeight: FontWeight.bold,
-            ),
+      appBar: AppBar(
+        title: const Text(
+          "Изучение английского языка",
+          style: TextStyle(
+            color: appBarFontColor,
+            fontWeight: FontWeight.bold,
           ),
-          centerTitle: true,
-          backgroundColor: appBarColor,
         ),
-        backgroundColor: backgroundColor,
-        body: ListView.builder(
-            itemCount: chapters.length,
-            itemBuilder: (context, index) {
-              return MenuCard(
-                  title: chapters[index],
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(
-                      "/chapter",
-                      arguments: {
-                        "chapterTitle": chapters[index],
-                        "data": database[chapters[index]],
-                      },
-                    );
-                  });
-            }));
+        centerTitle: true,
+        backgroundColor: appBarColor,
+      ),
+      backgroundColor: backgroundColor,
+      body: ListView.builder(
+        itemCount: chapters.length,
+        itemBuilder: (context, index) {
+          return MenuCard(
+            title: chapters[index],
+            lock: false,
+            onPressed: () {
+              Navigator.of(context).pushNamed(
+                "/chapter",
+                arguments: {
+                  "chapterTitle": chapters[index],
+                  "data": database[chapters[index]],
+                },
+              );
+            },
+          );
+        },
+      ),
+    );
   }
 }

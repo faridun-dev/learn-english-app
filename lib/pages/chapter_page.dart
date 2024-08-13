@@ -1,5 +1,5 @@
 import 'package:eng_game_app/components/constants.dart';
-import 'package:eng_game_app/components/menu_card.dart';
+import 'package:eng_game_app/components/lesson_card.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -39,7 +39,7 @@ class _ChapterPageState extends State<ChapterPage> {
       body: ListView.builder(
         itemCount: lessons.length,
         itemBuilder: (context, index) {
-          return MenuCard(
+          return LessonCard(
             title: lessons[index],
             onPressed: () {
               Navigator.of(context).pushNamed(

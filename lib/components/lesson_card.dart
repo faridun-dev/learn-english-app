@@ -2,15 +2,13 @@ import 'package:eng_game_app/components/constants.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class MenuCard extends StatelessWidget {
+class LessonCard extends StatelessWidget {
   String title;
   void Function()? onPressed;
-  bool lock = false;
-  MenuCard({
+  LessonCard({
     super.key,
     required this.title,
     required this.onPressed,
-    required this.lock,
   });
 
   @override
@@ -39,23 +37,15 @@ class MenuCard extends StatelessWidget {
               ),
             ],
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Center(
-                child: Text(
-                  title,
-                  style: const TextStyle(
-                    color: fontColorPrimary,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25,
-                  ),
-                ),
+          child: Center(
+            child: Text(
+              title,
+              style: const TextStyle(
+                color: fontColorPrimary,
+                fontWeight: FontWeight.bold,
+                fontSize: 25,
               ),
-              Icon(
-                lock ? Icons.lock_rounded : Icons.lock_open_rounded,
-              ),
-            ],
+            ),
           ),
         ),
       ),
