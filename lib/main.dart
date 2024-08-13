@@ -1,4 +1,4 @@
-import 'package:eng_game_app/pages/home_page.dart';
+import 'package:eng_game_app/components/constants.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,10 +11,20 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      routes: routes,
       theme: ThemeData(
-        fontFamily: "Sans Pro 3"
+        scaffoldBackgroundColor: backgroundColor,
+        fontFamily: "Sans Pro 3",
+        appBarTheme: const AppBarTheme(
+          backgroundColor: appBarColor,
+          centerTitle: true,
+          titleTextStyle: TextStyle(
+            color: appBarFontColor,
+            fontWeight: FontWeight.bold,
+            fontSize: 22,
+          ),
+        ),
       ),
-      home: const HomePage(),
       debugShowCheckedModeBanner: false,
     );
   }

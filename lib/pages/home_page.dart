@@ -29,15 +29,25 @@ class _HomePageState extends State<HomePage> {
         children: [
           MenuCard(
             title: "Часть 1",
+            onPressed: () {
+              Navigator.of(context).pushNamed(
+                "/chapter",
+                arguments: {
+                  "chapterTitle": "Часть 1",
+                },
+              );
+            },
           ),
           MenuCard(
             title: "Часть 2",
-          ),
-          MenuCard(
-            title: "Часть 3",
-          ),
-          MenuCard(
-            title: "Игры",
+            onPressed: () {
+              Navigator.of(context).pushNamed(
+                "/chapter",
+                arguments: {
+                  "chapterTitle": "Часть 2",
+                },
+              );
+            },
           ),
         ],
       ),
