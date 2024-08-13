@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -17,3 +18,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+fonts:
+  - family: Sans Pro 3
+    fonts: 
+      - asset: fonts/SourceSans3.ttf
