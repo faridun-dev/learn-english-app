@@ -34,6 +34,7 @@ class WordsDatabase {
         ${WordFields.translation} $textType,
         ${WordFields.example} $textType,
         ${WordFields.counter} $textType,
+        ${WordFields.audioPath} $textType,
       )
     """);
   }
