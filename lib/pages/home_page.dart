@@ -1,8 +1,8 @@
 import 'package:eng_game_app/components/constants.dart';
-import 'package:eng_game_app/components/menu_card.dart';
-import 'package:eng_game_app/data/data.dart';
+import 'package:eng_game_app/components/word_card.dart';
+import 'package:eng_game_app/data/database/words_database.dart';
+import 'package:eng_game_app/data/models/word_model.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,19 +12,27 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final _box = Hive.box("database");
+  late List<WordModel> words = [];
+
+  Future refreshWords() async {
+    words = await WordsDatabase.instance.readAllWords();
+    setState(() {});
+  }
+
   @override
   void initState() {
-    if (!_box.containsKey("data")) {
-      _box.put("data", data);
-    }
+    refreshWords();
     super.initState();
   }
 
   @override
+  void dispose() {
+    WordsDatabase.instance.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final database = _box.get("data");
-    List chapters = database.keys.toList();
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -37,24 +45,24 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         backgroundColor: appBarColor,
       ),
-      backgroundColor: backgroundColor,
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: appBarColor,
+        foregroundColor: backgroundColor,
+        onPressed: () => Navigator.of(context).pushNamed(
+          "/addWord",
+        ),
+        child: const Icon(
+          Icons.add,
+        ),
+      ),
       body: ListView.builder(
-        itemCount: chapters.length,
         itemBuilder: (context, index) {
-          return MenuCard(
-            title: chapters[index],
-            lock: false,
-            onPressed: () {
-              Navigator.of(context).pushNamed(
-                "/chapter",
-                arguments: {
-                  "chapterTitle": chapters[index],
-                  "data": database[chapters[index]],
-                },
-              );
-            },
+          return WordCard(
+            word: words[index].word,
+            translation: words[index].translation,
           );
         },
+        itemCount: words.length,
       ),
     );
   }

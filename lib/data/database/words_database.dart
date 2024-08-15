@@ -26,15 +26,17 @@ class WordsDatabase {
   Future _createDB(Database db, int version) async {
     const idType = "INTEGER PRIMARY KEY AUTOINCREMENT";
     const textType = "TEXT NOT NULL";
+    const numberType = "INTEGER NOT NULL";
 
     await db.execute("""
       CREATE TABLE $tableWords (
         ${WordFields.id} $idType,
         ${WordFields.word} $textType,
         ${WordFields.translation} $textType,
+        ${WordFields.lessonNumber} $textType,
         ${WordFields.example} $textType,
-        ${WordFields.counter} $textType,
-        ${WordFields.audioPath} $textType,
+        ${WordFields.counter} $numberType,
+        ${WordFields.audioPath} $textType
       )
     """);
   }

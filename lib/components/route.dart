@@ -1,6 +1,7 @@
 import 'package:eng_game_app/pages/chapter_page.dart';
 import 'package:eng_game_app/pages/home_page.dart';
 import 'package:eng_game_app/pages/lesson_page.dart';
+import 'package:eng_game_app/pages/word_add_page.dart';
 import 'package:flutter/material.dart';
 
 final Map<String, WidgetBuilder> routes = {
@@ -19,4 +20,5 @@ final Map<String, WidgetBuilder> routes = {
       data: args["data"],
     );
   },
+  "/addWord": (context) => const WordAddPage(),
 };

@@ -1,11 +1,12 @@
 import 'package:eng_game_app/components/constants.dart';
 import 'package:eng_game_app/components/lesson_card.dart';
+import 'package:eng_game_app/data/models/word_model.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class ChapterPage extends StatefulWidget {
   String chapterTitle;
-  final data;
+  List<WordModel> data;
   ChapterPage({
     super.key,
     required this.chapterTitle,
@@ -17,9 +18,9 @@ class ChapterPage extends StatefulWidget {
 }
 
 class _ChapterPageState extends State<ChapterPage> {
+  List<WordModel> lessons = [];
   @override
   Widget build(BuildContext context) {
-    List lessons = widget.data.keys.toList();
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -37,22 +38,10 @@ class _ChapterPageState extends State<ChapterPage> {
         ),
       ),
       body: ListView.builder(
-        itemCount: lessons.length,
-        itemBuilder: (context, index) {
-          return LessonCard(
-            title: lessons[index],
-            onPressed: () {
-              Navigator.of(context).pushNamed(
-                "/lesson",
-                arguments: {
-                  "lessonTitle": lessons[index],
-                  "data": widget.data[lessons[index]],
-                },
-              );
-            },
-          );
-        },
-      ),
+          itemCount: lessons.length,
+          itemBuilder: (context, index) {
+            return LessonCard(title: (index + 1).toString(), onPressed: () {});
+          }),
     );
   }
 }

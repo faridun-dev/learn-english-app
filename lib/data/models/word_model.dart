@@ -1,4 +1,4 @@
-const String tableWords = "words";
+const String tableWords = "tableWords";
 
 class WordFields {
   static final List<String> values = [
@@ -29,7 +29,7 @@ class WordModel {
   final int counter;
   final String audioPath;
 
-  const WordModel({
+  WordModel({
     this.id,
     required this.word,
     required this.translation,
@@ -59,6 +59,7 @@ class WordModel {
     String? audioPath,
   }) =>
       WordModel(
+        id: id ?? this.id,
         word: word ?? this.word,
         translation: translation ?? this.translation,
         lessonNumber: lessonNumber ?? this.lessonNumber,
