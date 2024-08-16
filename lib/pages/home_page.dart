@@ -1,5 +1,5 @@
 import 'package:eng_game_app/components/constants.dart';
-import 'package:eng_game_app/components/menu_card.dart';
+import 'package:eng_game_app/components/cards/menu_card.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
