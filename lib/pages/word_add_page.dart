@@ -118,16 +118,19 @@ class _WordAddPageState extends State<WordAddPage> {
                 backgroundColor: appBarColor,
                 foregroundColor: backgroundColor,
               ),
-              onPressed: () => addWord(
-                WordModel(
-                  word: wordController.text,
-                  translation: translationController.text,
-                  lessonNumber: lessonController.text,
-                  example: exampleController.text,
-                  counter: 0,
-                  audioPath: audioController.text,
-                ),
-              ),
+              onPressed: () {
+                addWord(
+                  WordModel(
+                    word: wordController.text,
+                    translation: translationController.text,
+                    lessonNumber: lessonController.text,
+                    example: exampleController.text,
+                    counter: 0,
+                    audioPath: audioController.text,
+                  ),
+                );
+             
+              },
               child: const Text(
                 "ADD WORD",
               ),

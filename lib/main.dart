@@ -3,6 +3,7 @@ import 'package:eng_game_app/components/route.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MainApp());
 }
 

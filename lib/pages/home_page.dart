@@ -1,5 +1,4 @@
 import 'package:eng_game_app/components/constants.dart';
-import 'package:eng_game_app/components/word_card.dart';
 import 'package:eng_game_app/data/database/words_database.dart';
 import 'package:eng_game_app/data/models/word_model.dart';
 import 'package:flutter/material.dart';
@@ -15,14 +14,16 @@ class _HomePageState extends State<HomePage> {
   late List<WordModel> words = [];
 
   Future refreshWords() async {
-    words = await WordsDatabase.instance.readAllWords();
-    setState(() {});
+    final fetchWords = await WordsDatabase.instance.readAllWords();
+    setState(() {
+      words = fetchWords;
+    });
   }
 
   @override
   void initState() {
-    refreshWords();
     super.initState();
+    refreshWords();
   }
 
   @override
@@ -45,25 +46,23 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         backgroundColor: appBarColor,
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: appBarColor,
-        foregroundColor: backgroundColor,
-        onPressed: () => Navigator.of(context).pushNamed(
-          "/addWord",
-        ),
-        child: const Icon(
-          Icons.add,
-        ),
-      ),
-      body: ListView.builder(
-        itemBuilder: (context, index) {
-          return WordCard(
-            word: words[index].word,
-            translation: words[index].translation,
-          );
-        },
-        itemCount: words.length,
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   backgroundColor: appBarColor,
+      //   foregroundColor: backgroundColor,
+      //   onPressed: () {
+      //     Navigator.of(context)
+      //         .pushNamed(
+      //       "/addWord",
+      //     )
+      //         .then((_) {
+      //       refreshWords();
+      //     });
+      //   },
+      //   child: const Icon(
+      //     Icons.add,
+      //   ),
+      // ),
+      body: ListView(),
     );
   }
 }
