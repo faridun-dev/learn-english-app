@@ -31,46 +31,48 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            "Изучение английского языка",
-            style: TextStyle(
-              color: appBarFontColor,
-              fontWeight: FontWeight.bold,
-            ),
+      appBar: AppBar(
+        title: const Text(
+          "Изучение английского языка",
+          style: TextStyle(
+            color: appBarFontColor,
+            fontWeight: FontWeight.bold,
           ),
-          centerTitle: true,
-          backgroundColor: appBarColor,
         ),
-        // floatingActionButton: FloatingActionButton(
-        //   backgroundColor: appBarColor,
-        //   foregroundColor: backgroundColor,
-        //   onPressed: () {
-        //     Navigator.of(context).pushNamed(
-        //       "/addWord",
-        //     );
-        //   },
-        //   child: const Icon(
-        //     Icons.add,
-        //   ),
-        // ),
-        body: ListView.builder(
-            itemCount: chapters.length,
-            itemBuilder: (context, index) {
-              final chapter = chapters[index];
-              return MenuCard(
-                title: chapter["title"],
-                onPressed: () {
-                  Navigator.of(context).pushNamed(
-                    "/chapter",
-                    arguments: {
-                      "chapterTitle": chapter["title"],
-                      "lessons": chapter["lessons"],
-                    },
-                  );
+        centerTitle: true,
+        backgroundColor: appBarColor,
+      ),
+      // floatingActionButton: FloatingActionButton(
+      //   backgroundColor: appBarColor,
+      //   foregroundColor: backgroundColor,
+      //   onPressed: () {
+      //     Navigator.of(context).pushNamed(
+      //       "/addWord",
+      //     );
+      //   },
+      //   child: const Icon(
+      //     Icons.add,
+      //   ),
+      // ),
+      body: ListView.builder(
+        itemCount: chapters.length,
+        itemBuilder: (context, index) {
+          final chapter = chapters[index];
+          return MenuCard(
+            title: chapter["title"],
+            onPressed: () {
+              Navigator.of(context).pushNamed(
+                "/chapter",
+                arguments: {
+                  "chapterTitle": chapter["title"],
+                  "lessons": chapter["lessons"],
                 },
-                lock: chapter["locked"],
               );
-            }));
+            },
+            lock: chapter["locked"],
+          );
+        },
+      ),
+    );
   }
 }

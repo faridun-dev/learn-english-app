@@ -1,11 +1,11 @@
 import 'package:eng_game_app/components/constants.dart';
-import 'package:eng_game_app/components/menu_card.dart';
+import 'package:eng_game_app/components/lesson_card.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class ChapterPage extends StatefulWidget {
   String chapterTitle;
-  List lessons;
+  List<int> lessons;
   ChapterPage({
     super.key,
     required this.chapterTitle,
@@ -38,7 +38,7 @@ class _ChapterPageState extends State<ChapterPage> {
       body: ListView.builder(
         itemCount: widget.lessons.length,
         itemBuilder: (context, index) {
-          return MenuCard(
+          return LessonCard(
             title: "Lesson ${widget.lessons[index]}",
             onPressed: () {
               Navigator.of(context).pushNamed(
@@ -48,7 +48,6 @@ class _ChapterPageState extends State<ChapterPage> {
                 },
               );
             },
-            lock: false,
           );
         },
       ),
