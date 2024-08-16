@@ -10,14 +10,13 @@ final Map<String, WidgetBuilder> routes = {
     final args = ModalRoute.of(context)!.settings.arguments as Map;
     return ChapterPage(
       chapterTitle: args["chapterTitle"]!,
-      data: args["data"],
+      lessons: args["lessons"],
     );
   },
   "/lesson": (context) {
     final args = ModalRoute.of(context)!.settings.arguments as Map;
     return LessonPage(
-      lessonTitle: args["lessonTitle"],
-      data: args["data"],
+    lessonNumber: args["lessonNumber"],
     );
   },
   "/addWord": (context) => const WordAddPage(),

@@ -1,16 +1,15 @@
 import 'package:eng_game_app/components/constants.dart';
-import 'package:eng_game_app/components/lesson_card.dart';
-import 'package:eng_game_app/data/models/word_model.dart';
+import 'package:eng_game_app/components/menu_card.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class ChapterPage extends StatefulWidget {
   String chapterTitle;
-  List<WordModel> data;
+  int lessons;
   ChapterPage({
     super.key,
     required this.chapterTitle,
-    required this.data,
+    required this.lessons,
   });
 
   @override
@@ -18,7 +17,6 @@ class ChapterPage extends StatefulWidget {
 }
 
 class _ChapterPageState extends State<ChapterPage> {
-  List<WordModel> lessons = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,10 +36,22 @@ class _ChapterPageState extends State<ChapterPage> {
         ),
       ),
       body: ListView.builder(
-          itemCount: lessons.length,
-          itemBuilder: (context, index) {
-            return LessonCard(title: (index + 1).toString(), onPressed: () {});
-          }),
+        itemCount: widget.lessons,
+        itemBuilder: (context, index) {
+          return MenuCard(
+            title: "Lesson ${index + 1}",
+            onPressed: () {
+              Navigator.of(context).pushNamed(
+                "/lesson",
+                arguments: {
+                  "lessonNumber": "${index + 1}",
+                },
+              );
+            },
+            lock: false,
+          );
+        },
+      ),
     );
   }
 }

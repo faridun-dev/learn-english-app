@@ -74,6 +74,23 @@ class WordsDatabase {
     return result.map((json) => WordModel.fromJson(json)).toList();
   }
 
+  Future<List<WordModel>?> readLesson(String lesson) async {
+    final db = await instance.database;
+
+    final result = await db.query(
+      tableWords,
+      columns: WordFields.values,
+      where: "${WordFields.lessonNumber} = ?",
+      whereArgs: [lesson],
+    );
+
+    if (result.isEmpty) {
+      throw Exception("No Lesson $lesson words found in DB");
+    } else {
+      return result.map((json) => WordModel.fromJson(json)).toList();
+    }
+  }
+
   Future<int> updateWord(WordModel word) async {
     final db = await instance.database;
 

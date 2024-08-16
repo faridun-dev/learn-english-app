@@ -1,6 +1,5 @@
 import 'package:eng_game_app/components/constants.dart';
-import 'package:eng_game_app/data/database/words_database.dart';
-import 'package:eng_game_app/data/models/word_model.dart';
+import 'package:eng_game_app/components/menu_card.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -11,27 +10,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late List<WordModel> words = [];
-
-  Future refreshWords() async {
-    final fetchWords = await WordsDatabase.instance.readAllWords();
-    setState(() {
-      words = fetchWords;
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    refreshWords();
-  }
-
-  @override
-  void dispose() {
-    WordsDatabase.instance.close();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,19 +28,28 @@ class _HomePageState extends State<HomePage> {
       //   backgroundColor: appBarColor,
       //   foregroundColor: backgroundColor,
       //   onPressed: () {
-      //     Navigator.of(context)
-      //         .pushNamed(
+      //     Navigator.of(context).pushNamed(
       //       "/addWord",
-      //     )
-      //         .then((_) {
-      //       refreshWords();
-      //     });
+      //     );
       //   },
       //   child: const Icon(
       //     Icons.add,
       //   ),
       // ),
-      body: ListView(),
+      body: ListView(
+        children: [
+          MenuCard(
+            title: "Chapter 1",
+            onPressed: () {
+              Navigator.of(context).pushNamed(
+                "/chapter",
+                arguments: {"chapterTitle": "Chapter 1", "lessons": 12},
+              );
+            },
+            lock: false,
+          ),
+        ],
+      ),
     );
   }
 }
