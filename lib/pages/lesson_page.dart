@@ -34,12 +34,6 @@ class _LessonPageState extends State<LessonPage> {
   }
 
   @override
-  void dispose() {
-    WordsDatabase.instance.close();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

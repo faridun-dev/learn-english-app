@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class ChapterPage extends StatefulWidget {
   String chapterTitle;
-  int lessons;
+  List lessons;
   ChapterPage({
     super.key,
     required this.chapterTitle,
@@ -36,15 +36,15 @@ class _ChapterPageState extends State<ChapterPage> {
         ),
       ),
       body: ListView.builder(
-        itemCount: widget.lessons,
+        itemCount: widget.lessons.length,
         itemBuilder: (context, index) {
           return MenuCard(
-            title: "Lesson ${index + 1}",
+            title: "Lesson ${widget.lessons[index]}",
             onPressed: () {
               Navigator.of(context).pushNamed(
                 "/lesson",
                 arguments: {
-                  "lessonNumber": "${index + 1}",
+                  "lessonNumber": "${widget.lessons[index]}",
                 },
               );
             },
