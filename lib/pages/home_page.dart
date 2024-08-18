@@ -1,5 +1,5 @@
 import 'package:eng_game_app/components/constants.dart';
-import 'package:eng_game_app/components/cards/menu_card.dart';
+import 'package:eng_game_app/components/menu/menu_card.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -26,6 +26,10 @@ class _HomePageState extends State<HomePage> {
       "lessons": List.generate(12, (index) => index + 25), // [25, 26, ..., 36]
       "locked": true,
     },
+    {
+      "title": "Games",
+      "locked": false,
+    },
   ];
 
   @override
@@ -42,35 +46,45 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         backgroundColor: appBarColor,
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   backgroundColor: appBarColor,
-      //   foregroundColor: backgroundColor,
-      //   onPressed: () {
-      //     Navigator.of(context).pushNamed(
-      //       "/addWord",
-      //     );
-      //   },
-      //   child: const Icon(
-      //     Icons.add,
-      //   ),
-      // ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: appBarColor,
+        foregroundColor: backgroundColor,
+        onPressed: () {
+          Navigator.of(context).pushNamed(
+            "/addWord",
+          );
+        },
+        child: const Icon(
+          Icons.add,
+        ),
+      ),
       body: ListView.builder(
         itemCount: chapters.length,
         itemBuilder: (context, index) {
           final chapter = chapters[index];
-          return MenuCard(
-            title: chapter["title"],
-            onPressed: () {
-              Navigator.of(context).pushNamed(
-                "/chapter",
-                arguments: {
-                  "chapterTitle": chapter["title"],
-                  "lessons": chapter["lessons"],
-                },
-              );
-            },
-            lock: chapter["locked"],
-          );
+          return chapter["title"] == "Games"
+              ? MenuCard(
+                  title: chapter["title"],
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(
+                      "/games",
+                    );
+                  },
+                  lock: chapter["locked"],
+                )
+              : MenuCard(
+                  title: chapter["title"],
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(
+                      "/chapter",
+                      arguments: {
+                        "chapterTitle": chapter["title"],
+                        "lessons": chapter["lessons"]
+                      },
+                    );
+                  },
+                  lock: chapter["locked"],
+                );
         },
       ),
     );

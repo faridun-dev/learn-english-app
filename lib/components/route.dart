@@ -1,4 +1,5 @@
 import 'package:eng_game_app/pages/chapter_page.dart';
+import 'package:eng_game_app/pages/games_page.dart';
 import 'package:eng_game_app/pages/home_page.dart';
 import 'package:eng_game_app/pages/lesson_page.dart';
 import 'package:eng_game_app/pages/word_add_page.dart';
@@ -20,4 +21,5 @@ final Map<String, WidgetBuilder> routes = {
     );
   },
   "/addWord": (context) => const WordAddPage(),
+  "/games": (context) => const GamesPage(),
 };

@@ -1,5 +1,5 @@
 import 'package:eng_game_app/components/constants.dart';
-import 'package:eng_game_app/components/cards/word_card.dart';
+import 'package:eng_game_app/components/menu/word_card.dart';
 import 'package:eng_game_app/data/database/words_database.dart';
 import 'package:eng_game_app/data/models/word_model.dart';
 import 'package:flutter/material.dart';
