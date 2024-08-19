@@ -1,6 +1,9 @@
+import 'dart:math';
 import 'package:eng_game_app/components/cards/alert_card.dart';
 import 'package:eng_game_app/components/cards/word_card.dart';
 import 'package:eng_game_app/components/constants.dart';
+import 'package:eng_game_app/data/database/words_database.dart';
+import 'package:eng_game_app/data/models/word_model.dart';
 import 'package:flutter/material.dart';
 
 class GamesPage extends StatefulWidget {
@@ -12,11 +15,9 @@ class GamesPage extends StatefulWidget {
 
 class _GamesPageState extends State<GamesPage> {
   late double _progressValue;
+  late List<WordModel> words;
   bool questionMark = true;
   int currentIndex = 0;
-
-  List<String> words = ["hello", "bye", "name", "fire", "he", "she"];
-  List<String> translations = ["привет", "пока", "имя", "огонь", "он", "она"];
 
   void nextPair() {
     setState(() {
@@ -25,11 +26,22 @@ class _GamesPageState extends State<GamesPage> {
     });
   }
 
+  Future<void> getWords() async {
+    final random = Random();
+    final fetchedWords = await WordsDatabase.instance.readAllWords();
+    List<WordModel> filteredWords =
+        fetchedWords.where((word) => word.counter < 15).toList();
+
+    setState(() {
+      words = filteredWords.take(6).toList();
+      words.shuffle(random); // Shuffle after filtering and limiting to 6
+    });
+  }
+
   @override
   void initState() {
-    setState(() {
-      _progressValue = 0;
-    });
+    _progressValue = 0;
+    getWords();
     super.initState();
   }
 
@@ -104,7 +116,7 @@ class _GamesPageState extends State<GamesPage> {
                                         ),
                                       )
                                     : Text(
-                                        translations[currentIndex],
+                                        words[currentIndex].translation,
                                         style: const TextStyle(
                                           color: Colors.white,
                                           fontSize: 20,
@@ -121,7 +133,7 @@ class _GamesPageState extends State<GamesPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             TextButton(
-                              onPressed: () {
+                              onPressed: () async {
                                 if (questionMark == true) {
                                   showDialog(
                                     context: context,
@@ -131,7 +143,11 @@ class _GamesPageState extends State<GamesPage> {
                                   nextPair();
                                   setState(() {
                                     _progressValue += 0.01;
+                                    words[currentIndex].counter++;
                                   });
+                                  await WordsDatabase.instance.updateCounter(
+                                    words[currentIndex],
+                                  );
                                 }
                               },
                               style: TextButton.styleFrom(

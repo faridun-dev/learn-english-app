@@ -26,7 +26,7 @@ class WordModel {
   final String translation;
   final String lessonNumber;
   final String example;
-  final int counter;
+  int counter;
   final String audioPath;
 
   WordModel({

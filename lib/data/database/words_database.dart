@@ -102,6 +102,17 @@ class WordsDatabase {
     );
   }
 
+  Future<int> updateCounter(WordModel word) async {
+    final db = await instance.database;
+
+    return await db.update(
+      tableWords,
+      word.toJson(),
+      where: "${WordFields.id} = ?",
+      whereArgs: [word.id],
+    );
+  }
+
   Future<int> deleteWord(int id) async {
     final db = await instance.database;
 

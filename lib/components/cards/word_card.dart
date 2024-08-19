@@ -1,9 +1,10 @@
 import 'package:eng_game_app/components/constants.dart';
+import 'package:eng_game_app/data/models/word_model.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class WordCard extends StatelessWidget {
-  List words;
+  List<WordModel> words;
   int currentIndex;
   WordCard({
     super.key,
@@ -22,7 +23,7 @@ class WordCard extends StatelessWidget {
         ),
         child: Center(
           child: Text(
-            words[currentIndex],
+            words[currentIndex].word,
             style: const TextStyle(
               color: Colors.white,
               fontSize: 20,
