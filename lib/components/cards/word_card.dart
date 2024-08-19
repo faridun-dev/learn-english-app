@@ -18,7 +18,7 @@ class WordCard extends StatelessWidget {
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: appBarColor,
+          color: wordCardColor,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Center(

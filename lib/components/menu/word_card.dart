@@ -40,7 +40,7 @@ class WordCard extends StatelessWidget {
             Text(
               word,
               style: const TextStyle(
-                color: appBarColor,
+                color: fontColorPrimary,
                 fontWeight: FontWeight.bold,
                 fontSize: 50,
               ),

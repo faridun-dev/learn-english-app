@@ -19,14 +19,14 @@ class _GamesPageState extends State<GamesPage> {
   bool questionMark = true;
   int currentIndex = 0;
 
-  void nextPair() {
-    setState(() {
-      currentIndex++;
-      questionMark = true;
-    });
+  @override
+  void initState() {
+    _progressValue = 0;
+    _initializeGame();
+    super.initState();
   }
 
-  Future<void> getWords() async {
+  Future<void> _initializeGame() async {
     final random = Random();
     final fetchedWords = await WordsDatabase.instance.readAllWords();
     List<WordModel> filteredWords =
@@ -34,15 +34,41 @@ class _GamesPageState extends State<GamesPage> {
 
     setState(() {
       words = filteredWords.take(6).toList();
-      words.shuffle(random); // Shuffle after filtering and limiting to 6
+      words.shuffle(random);
     });
   }
 
-  @override
-  void initState() {
-    _progressValue = 0;
-    getWords();
-    super.initState();
+  void _handleCorrectAnswer() async {
+    if (!questionMark) {
+      _progressValue += 0.01;
+      words[currentIndex].counter++;
+      await WordsDatabase.instance.updateCounter(words[currentIndex]);
+      _nextPair();
+    } else {
+      _showAlert();
+    }
+  }
+
+  void _handleIncorrectAnswer() {
+    if (!questionMark) {
+      _nextPair();
+    } else {
+      _showAlert();
+    }
+  }
+
+  void _nextPair() {
+    setState(() {
+      currentIndex++;
+      questionMark = true;
+    });
+  }
+
+  void _showAlert() {
+    showDialog(
+      context: context,
+      builder: (context) => const AlertCard(),
+    );
   }
 
   @override
@@ -51,155 +77,99 @@ class _GamesPageState extends State<GamesPage> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () => Navigator.of(context).pop(),
-          icon: const Icon(
-            Icons.arrow_back_ios_rounded,
-            color: actionBackColor,
-          ),
+          icon:
+              const Icon(Icons.arrow_back_ios_rounded, color: actionBackColor),
         ),
-        actionsIconTheme: const IconThemeData(
-          color: actionBackColor,
-        ),
-        title: const Text(
-          "Games",
-        ),
+        title: const Text("Games"),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(
-          10,
-        ),
+        padding: const EdgeInsets.all(10),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Column(
-              children: [
-                LinearProgressIndicator(
-                  minHeight: 10,
-                  borderRadius: BorderRadius.circular(12),
-                  backgroundColor: Colors.white,
-                  color: appBarColor,
-                  value: _progressValue,
-                ),
-                Text("${(_progressValue * 100).round()}%")
-              ],
-            ),
-            const SizedBox(
-              height: 10,
-            ),
+            _buildProgressIndicator(),
+            const SizedBox(height: 10),
             words.length > currentIndex
-                ? Expanded(
-                    child: Column(
-                      children: [
-                        WordCard(currentIndex: currentIndex, words: words),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                questionMark = false;
-                              });
-                            },
-                            child: Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: appBarColor,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Center(
-                                child: questionMark
-                                    ? const Text(
-                                        "?",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 20,
-                                        ),
-                                      )
-                                    : Text(
-                                        words[currentIndex].translation,
-                                        style: const TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 20,
-                                        ),
-                                      ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            TextButton(
-                              onPressed: () async {
-                                if (questionMark == true) {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) => const AlertCard(),
-                                  );
-                                } else {
-                                  nextPair();
-                                  setState(() {
-                                    _progressValue += 0.01;
-                                    words[currentIndex].counter++;
-                                  });
-                                  await WordsDatabase.instance.updateCounter(
-                                    words[currentIndex],
-                                  );
-                                }
-                              },
-                              style: TextButton.styleFrom(
-                                backgroundColor: buttonColor,
-                                minimumSize: const Size(
-                                  150,
-                                  50,
-                                ),
-                              ),
-                              child: const Text(
-                                "CORRECT",
-                                style: TextStyle(
-                                  color: Colors.green,
-                                ),
-                              ),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                if (questionMark == true) {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) => const AlertCard(),
-                                  );
-                                } else {
-                                  nextPair();
-                                }
-                              },
-                              style: TextButton.styleFrom(
-                                backgroundColor: buttonColor,
-                                minimumSize: const Size(
-                                  150,
-                                  50,
-                                ),
-                              ),
-                              child: const Text(
-                                "INCORRECT",
-                                style: TextStyle(
-                                  color: Colors.red,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  )
-                : const Center(
-                    child: Text("Over"),
-                  ),
+                ? _buildGameContent()
+                : const Center(child: Text("Over")),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildProgressIndicator() {
+    return Column(
+      children: [
+        LinearProgressIndicator(
+          minHeight: 10,
+          borderRadius: BorderRadius.circular(12),
+          backgroundColor: Colors.white,
+          color: appBarColor,
+          value: _progressValue,
+        ),
+        Text("${(_progressValue * 100).round()}%")
+      ],
+    );
+  }
+
+  Widget _buildGameContent() {
+    return Expanded(
+      child: Column(
+        children: [
+          WordCard(currentIndex: currentIndex, words: words),
+          const SizedBox(height: 10),
+          Expanded(child: _buildTranslationContainer()),
+          const SizedBox(height: 10),
+          _buildAnswerButtons(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTranslationContainer() {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          questionMark = false;
+        });
+      },
+      child: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: appBarColor,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Center(
+          child: Text(
+            questionMark ? "?" : words[currentIndex].translation,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAnswerButtons() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        _buildAnswerButton("CORRECT", Colors.green, _handleCorrectAnswer),
+        _buildAnswerButton("INCORRECT", Colors.red, _handleIncorrectAnswer),
+      ],
+    );
+  }
+
+  Widget _buildAnswerButton(String label, Color color, VoidCallback onPressed) {
+    return TextButton(
+      onPressed: onPressed,
+      style: TextButton.styleFrom(
+        backgroundColor: buttonColor,
+        minimumSize: const Size(150, 50),
+      ),
+      child: Text(label, style: TextStyle(color: color)),
     );
   }
 }

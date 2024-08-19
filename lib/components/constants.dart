@@ -7,5 +7,6 @@ const Color fontColorPrimary = Color(0xFF205493);
 const Color appBarColor = Color(0xFF205493);
 const Color appBarFontColor = Color(0xFFFFFFFF);
 const Color actionBackColor = Color(0xFFFFFFFF);
+const Color wordCardColor = Color(0xFF205493);
 Color menuCardShadow = const Color(0xFF808080).withOpacity(0.5);
 Color fontColorSecondary = Colors.grey.shade700;
