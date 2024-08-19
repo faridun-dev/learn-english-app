@@ -15,7 +15,7 @@ class GamesPage extends StatefulWidget {
 
 class _GamesPageState extends State<GamesPage> {
   late double _progressValue;
-  late List<WordModel> words;
+  late List<WordModel> words = [];
   bool questionMark = true;
   int currentIndex = 0;
 
@@ -31,6 +31,7 @@ class _GamesPageState extends State<GamesPage> {
     final fetchedWords = await WordsDatabase.instance.readAllWords();
     List<WordModel> filteredWords =
         fetchedWords.where((word) => word.counter < 15).toList();
+    filteredWords.shuffle(random);
 
     setState(() {
       words = filteredWords.take(6).toList();

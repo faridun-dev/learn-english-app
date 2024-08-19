@@ -690,18 +690,6 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         backgroundColor: appBarColor,
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: appBarColor,
-        foregroundColor: backgroundColor,
-        onPressed: () {
-          Navigator.of(context).pushNamed(
-            "/addWord",
-          );
-        },
-        child: const Icon(
-          Icons.add,
-        ),
-      ),
       body: ListView.builder(
         itemCount: chapters.length,
         itemBuilder: (context, index) {
