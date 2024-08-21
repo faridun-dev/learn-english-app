@@ -19,8 +19,8 @@ class _GamesPageState extends State<GamesPage> {
   late double _progressValue;
   late List<WordModel> words = [];
   late List<WordModel> matchGameWords = [];
-  List<WordModel> firstColumnWords = [];
-  List<WordModel> secondColumnWords = [];
+  List<WordModel?> firstColumnWords = [];
+  List<WordModel?> secondColumnWords = [];
   WordModel? selectedFirstWord;
   WordModel? selectedSecondWord;
 
@@ -100,8 +100,12 @@ class _GamesPageState extends State<GamesPage> {
   void _checkForMatch() {
     if (selectedFirstWord!.translation == selectedSecondWord!.translation) {
       setState(() {
-        firstColumnWords.remove(selectedFirstWord);
-        secondColumnWords.remove(selectedSecondWord);
+        int firstIndex = firstColumnWords.indexOf(selectedFirstWord);
+        int secondIndex = secondColumnWords.indexOf(selectedSecondWord);
+
+        firstColumnWords[firstIndex] = null;
+        secondColumnWords[secondIndex] = null;
+
         _progressValue += 0.1; // Increment progress
       });
     }
@@ -227,22 +231,29 @@ class _GamesPageState extends State<GamesPage> {
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 10),
                     child: GestureDetector(
-                      onTap: () => _handleWordSelection(word, true),
-                      child: Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: selectedFirstWord == word
-                              ? Colors.green
-                              : appBarColor,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Center(
-                          child: Text(
-                            word.word,
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ),
+                      onTap: word != null
+                          ? () => _handleWordSelection(word, true)
+                          : null,
+                      child: word != null
+                          ? Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: selectedFirstWord == word
+                                    ? Colors.green
+                                    : appBarColor,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  word.word,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 25,
+                                  ),
+                                ),
+                              ),
+                            )
+                          : const SizedBox.shrink(),
                     ),
                   ),
                 );
@@ -257,22 +268,29 @@ class _GamesPageState extends State<GamesPage> {
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 10),
                     child: GestureDetector(
-                      onTap: () => _handleWordSelection(word, false),
-                      child: Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: selectedSecondWord == word
-                              ? Colors.green
-                              : appBarColor,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Center(
-                          child: Text(
-                            word.translation,
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ),
+                      onTap: word != null
+                          ? () => _handleWordSelection(word, false)
+                          : null,
+                      child: word != null
+                          ? Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: selectedSecondWord == word
+                                    ? Colors.green
+                                    : appBarColor,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  word.translation,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 25,
+                                  ),
+                                ),
+                              ),
+                            )
+                          : const SizedBox.shrink(),
                     ),
                   ),
                 );
