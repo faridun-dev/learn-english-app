@@ -14,10 +14,15 @@ class GamesPage extends StatefulWidget {
 }
 
 class _GamesPageState extends State<GamesPage> {
-  late double _progressValue;
-  late List<WordModel> words = [];
   bool questionMark = true;
   int currentIndex = 0;
+  late double _progressValue;
+  late List<WordModel> words = [];
+  late List<WordModel> matchGameWords = [];
+  List<WordModel> firstColumnWords = [];
+  List<WordModel> secondColumnWords = [];
+  WordModel? selectedFirstWord;
+  WordModel? selectedSecondWord;
 
   @override
   void initState() {
@@ -30,12 +35,18 @@ class _GamesPageState extends State<GamesPage> {
     final random = Random();
     final fetchedWords = await WordsDatabase.instance.readAllWords();
     List<WordModel> filteredWords =
-        fetchedWords.where((word) => word.counter < 15).toList();
+        fetchedWords.where((word) => word.counter < 20).toList();
     filteredWords.shuffle(random);
+
+    List<WordModel> matchGameFilteredWords =
+        fetchedWords.where((word) => word.counter < 20).toList();
+    matchGameFilteredWords.shuffle(random);
 
     setState(() {
       words = filteredWords.take(6).toList();
-      words.shuffle(random);
+      matchGameWords = matchGameFilteredWords.take(6).toList();
+      firstColumnWords = List.from(matchGameWords);
+      secondColumnWords = List.from(matchGameWords)..shuffle(random);
     });
   }
 
@@ -72,6 +83,32 @@ class _GamesPageState extends State<GamesPage> {
     );
   }
 
+  void _handleWordSelection(WordModel word, bool isFirstColumn) {
+    setState(() {
+      if (isFirstColumn) {
+        selectedFirstWord = word;
+      } else {
+        selectedSecondWord = word;
+      }
+
+      if (selectedFirstWord != null && selectedSecondWord != null) {
+        _checkForMatch();
+      }
+    });
+  }
+
+  void _checkForMatch() {
+    if (selectedFirstWord!.translation == selectedSecondWord!.translation) {
+      setState(() {
+        firstColumnWords.remove(selectedFirstWord);
+        secondColumnWords.remove(selectedSecondWord);
+        _progressValue += 0.1; // Increment progress
+      });
+    }
+    selectedFirstWord = null;
+    selectedSecondWord = null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,7 +128,7 @@ class _GamesPageState extends State<GamesPage> {
             const SizedBox(height: 10),
             words.length > currentIndex
                 ? _buildGameContent()
-                : const Center(child: Text("Over")),
+                : _buildMatchGame(),
           ],
         ),
       ),
@@ -145,7 +182,7 @@ class _GamesPageState extends State<GamesPage> {
             questionMark ? "?" : words[currentIndex].translation,
             style: const TextStyle(
               color: Colors.white,
-              fontSize: 20,
+              fontSize: 60,
             ),
           ),
         ),
@@ -167,10 +204,83 @@ class _GamesPageState extends State<GamesPage> {
     return TextButton(
       onPressed: onPressed,
       style: TextButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(
+            12,
+          ),
+        ),
         backgroundColor: buttonColor,
         minimumSize: const Size(150, 50),
       ),
-      child: Text(label, style: TextStyle(color: color)),
+      child: Text(label, style: TextStyle(color: color, fontSize: 18)),
+    );
+  }
+
+  Widget _buildMatchGame() {
+    return Expanded(
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              children: firstColumnWords.map((word) {
+                return Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: GestureDetector(
+                      onTap: () => _handleWordSelection(word, true),
+                      child: Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: selectedFirstWord == word
+                              ? Colors.green
+                              : appBarColor,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Center(
+                          child: Text(
+                            word.word,
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              children: secondColumnWords.map((word) {
+                return Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: GestureDetector(
+                      onTap: () => _handleWordSelection(word, false),
+                      child: Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: selectedSecondWord == word
+                              ? Colors.green
+                              : appBarColor,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Center(
+                          child: Text(
+                            word.translation,
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
