@@ -23,7 +23,7 @@ class LessonCard extends StatelessWidget {
         ),
         child: Container(
           padding: const EdgeInsets.all(
-            30,
+            22,
           ),
           decoration: BoxDecoration(
             color: menuCardColor,
