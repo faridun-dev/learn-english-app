@@ -12,27 +12,37 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final List<Map<String, dynamic>> chapters = [
-    {
-      "title": "Chapter 1",
-      "lessons": List.generate(12, (index) => index + 1), // [1, 2, ..., 12]
-      "locked": false,
-    },
-    {
-      "title": "Chapter 2",
-      "lessons": List.generate(12, (index) => index + 13), // [13, 14, ..., 24]
-      "locked": true,
-    },
-    {
-      "title": "Chapter 3",
-      "lessons": List.generate(12, (index) => index + 25), // [25, 26, ..., 36]
-      "locked": true,
-    },
-    {
-      "title": "Games",
-      "locked": false,
-    },
-  ];
+  bool chapterTwo = false;
+  bool chapterThree = false;
+  Future _isLocked(int lesson) async {
+    final db = WordsDatabase.instance;
+
+    List<WordModel> data = await db.readAllWords();
+    List<WordModel> chapterData = [];
+    final lessons = List.generate(12, (index) => lesson + index);
+
+    for (var element in lessons) {
+      for (WordModel word in data) {
+        if (word.lessonNumber == "$element") {
+          chapterData.add(word);
+        }
+      }
+    }
+
+    if (chapterData.every((word) => word.counter < 20)) {
+      if (lesson == 1) {
+        setState(() {
+          chapterTwo = true;
+        });
+      } else if (lesson == 13) {
+        setState(() {
+          chapterThree = true;
+        });
+      }
+    } else {
+      return false;
+    }
+  }
 
   final List<List<Map<String, dynamic>>> lessons = [
     // Lesson 1
@@ -679,6 +689,31 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    _isLocked(1);
+    _isLocked(13);
+    final List<Map<String, dynamic>> chapters = [
+      {
+        "title": "Chapter 1",
+        "lessons": List.generate(12, (index) => index + 1), // [1, 2, ..., 12]
+        "locked": false,
+      },
+      {
+        "title": "Chapter 2",
+        "lessons":
+            List.generate(12, (index) => index + 13), // [13, 14, ..., 24]
+        "locked": chapterTwo,
+      },
+      {
+        "title": "Chapter 3",
+        "lessons":
+            List.generate(12, (index) => index + 25), // [25, 26, ..., 36]
+        "locked": chapterThree,
+      },
+      {
+        "title": "Games",
+        "locked": false,
+      },
+    ];
     return Scaffold(
       appBar: AppBar(
         title: const Text(

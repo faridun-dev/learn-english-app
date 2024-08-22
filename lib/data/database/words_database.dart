@@ -92,6 +92,8 @@ class WordsDatabase {
     }
   }
 
+
+
   Future<int> updateWord(WordModel word) async {
     final db = await instance.database;
 
