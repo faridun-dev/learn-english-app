@@ -83,6 +83,32 @@ class _GamesPageState extends State<GamesPage> {
     );
   }
 
+  void _gameOver() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text("Game is over"),
+            content:
+                const Text("Congratulations! You've matched all the words!"),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                },
+                child: const Text(
+                  "Ok",
+                  style: TextStyle(
+                    color: appBarColor,
+                  ),
+                ),
+              ),
+            ],
+          );
+        });
+  }
+
   void _handleWordSelection(WordModel word, bool isFirstColumn) {
     setState(() {
       if (isFirstColumn) {
@@ -108,6 +134,10 @@ class _GamesPageState extends State<GamesPage> {
 
         _progressValue += 0.1; // Increment progress
       });
+      if (firstColumnWords.every((word) => word == null) &&
+          secondColumnWords.every((word) => word == null)) {
+        _gameOver();
+      }
     }
     selectedFirstWord = null;
     selectedSecondWord = null;
