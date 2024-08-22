@@ -1,4 +1,4 @@
-import 'package:eng_game_app/components/constants.dart';
+import 'package:eng_game_app/components/styles.dart';
 import 'package:flutter/material.dart';
 
 class MatchGameCard extends StatelessWidget {
@@ -13,9 +13,7 @@ class MatchGameCard extends StatelessWidget {
         ),
         child: Container(
           width: double.infinity,
-          decoration: const BoxDecoration(
-            color: appBarColor,
-          ),
+          decoration: matchGameCardBoxDecoration,
           child: const Center(child: Text("Hello")),
         ),
       ),

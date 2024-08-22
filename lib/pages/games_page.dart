@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:eng_game_app/components/cards/alert_card.dart';
 import 'package:eng_game_app/components/cards/word_card.dart';
 import 'package:eng_game_app/components/constants.dart';
+import 'package:eng_game_app/components/styles.dart';
 import 'package:eng_game_app/data/database/words_database.dart';
 import 'package:eng_game_app/data/models/word_model.dart';
 import 'package:flutter/material.dart';
@@ -209,17 +210,11 @@ class _GamesPageState extends State<GamesPage> {
       },
       child: Container(
         width: double.infinity,
-        decoration: BoxDecoration(
-          color: appBarColor,
-          borderRadius: BorderRadius.circular(10),
-        ),
+        decoration: translationCardBoxDecoration,
         child: Center(
           child: Text(
             questionMark ? "?" : words[currentIndex].translation,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 60,
-            ),
+            style: translationCardTextStyle,
           ),
         ),
       ),
@@ -239,16 +234,14 @@ class _GamesPageState extends State<GamesPage> {
   Widget _buildAnswerButton(String label, Color color, VoidCallback onPressed) {
     return TextButton(
       onPressed: onPressed,
-      style: TextButton.styleFrom(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(
-            12,
-          ),
+      style: answerButtonStyle,
+      child: Text(
+        label,
+        style: TextStyle(
+          color: color,
+          fontSize: 18,
         ),
-        backgroundColor: buttonColor,
-        minimumSize: const Size(150, 50),
       ),
-      child: Text(label, style: TextStyle(color: color, fontSize: 18)),
     );
   }
 
@@ -278,10 +271,7 @@ class _GamesPageState extends State<GamesPage> {
                               child: Center(
                                 child: Text(
                                   word.word,
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 25,
-                                  ),
+                                  style: matchGameCardTextStyle,
                                 ),
                               ),
                             )
@@ -315,10 +305,7 @@ class _GamesPageState extends State<GamesPage> {
                               child: Center(
                                 child: Text(
                                   word.translation,
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 25,
-                                  ),
+                                  style: matchGameCardTextStyle,
                                 ),
                               ),
                             )

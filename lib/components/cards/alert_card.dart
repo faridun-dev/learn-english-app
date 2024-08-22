@@ -1,4 +1,4 @@
-import 'package:eng_game_app/components/constants.dart';
+import 'package:eng_game_app/components/styles.dart';
 import 'package:flutter/material.dart';
 
 class AlertCard extends StatelessWidget {
@@ -17,9 +17,7 @@ class AlertCard extends StatelessWidget {
           },
           child: const Text(
             "Back",
-            style: TextStyle(
-              color: appBarColor,
-            ),
+            style: alertDialogTextStyle,
           ),
         ),
       ],

@@ -1,4 +1,4 @@
-import 'package:eng_game_app/components/constants.dart';
+import 'package:eng_game_app/components/styles.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -23,37 +23,19 @@ class WordCard extends StatelessWidget {
         padding: const EdgeInsets.all(
           30,
         ),
-        decoration: BoxDecoration(
-          color: menuCardColor,
-          borderRadius: BorderRadius.circular(
-            10,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: menuCardShadow,
-              blurRadius: 6,
-            ),
-          ],
-        ),
+        decoration: wordCardBoxDecoration,
         child: Column(
           children: [
             Text(
               word,
-              style: const TextStyle(
-                color: fontColorPrimary,
-                fontWeight: FontWeight.bold,
-                fontSize: 50,
-              ),
+              style: wordTextStyle,
             ),
             const SizedBox(
               height: 10,
             ),
             Text(
               translation,
-              style: TextStyle(
-                color: fontColorSecondary,
-                fontSize: 25,
-              ),
+              style: translationTextStyle,
             ),
           ],
         ),

@@ -1,5 +1,6 @@
 import 'package:eng_game_app/components/constants.dart';
 import 'package:eng_game_app/components/menu/menu_card.dart';
+import 'package:eng_game_app/components/styles.dart';
 import 'package:eng_game_app/data/database/words_database.dart';
 import 'package:eng_game_app/data/models/word_model.dart';
 import 'package:flutter/material.dart';
@@ -716,10 +717,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text(
           "Изучение английского языка",
-          style: TextStyle(
-            color: appBarFontColor,
-            fontWeight: FontWeight.bold,
-          ),
+          style: appBarTextStyle,
         ),
         centerTitle: true,
         backgroundColor: appBarColor,

@@ -44,9 +44,6 @@ class _LessonPageState extends State<LessonPage> {
             color: actionBackColor,
           ),
         ),
-        actionsIconTheme: const IconThemeData(
-          color: actionBackColor,
-        ),
         title: Text(
           "Lesson ${widget.lessonNumber}",
         ),

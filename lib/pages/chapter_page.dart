@@ -28,9 +28,6 @@ class _ChapterPageState extends State<ChapterPage> {
             color: actionBackColor,
           ),
         ),
-        actionsIconTheme: const IconThemeData(
-          color: actionBackColor,
-        ),
         title: Text(
           widget.chapterTitle,
         ),
