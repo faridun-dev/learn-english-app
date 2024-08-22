@@ -664,6 +664,7 @@ class _HomePageState extends State<HomePage> {
           example: wordPair["example"], // Add examples if needed
           counter: wordPair["counter"],
           audioPath: wordPair["audioPath"], // Add audio paths if needed
+          font: "Sans Pro 3",
         );
         await wordsDb.create(word);
       }

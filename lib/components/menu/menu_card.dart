@@ -16,7 +16,7 @@ class MenuCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onPressed,
+      onTap: !lock ? onPressed : null,
       child: Padding(
         padding: const EdgeInsets.only(
           top: 12,
@@ -28,7 +28,7 @@ class MenuCard extends StatelessWidget {
             30,
           ),
           decoration: BoxDecoration(
-            color: menuCardColor,
+            color: !lock ? menuCardColor : Colors.white70,
             borderRadius: BorderRadius.circular(
               10,
             ),
@@ -45,8 +45,10 @@ class MenuCard extends StatelessWidget {
               Center(
                 child: Text(
                   title,
-                  style: const TextStyle(
-                    color: fontColorPrimary,
+                  style: TextStyle(
+                    color: !lock
+                        ? fontColorPrimary
+                        : const Color(0xFF205493).withOpacity(0.7),
                     fontWeight: FontWeight.bold,
                     fontSize: 25,
                   ),

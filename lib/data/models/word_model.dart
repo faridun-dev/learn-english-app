@@ -9,6 +9,7 @@ class WordFields {
     example,
     counter,
     audioPath,
+    font,
   ];
 
   static const id = "_id";
@@ -18,6 +19,7 @@ class WordFields {
   static const example = "example";
   static const counter = "counter";
   static const audioPath = "audioPath";
+  static const font = "font";
 }
 
 class WordModel {
@@ -28,6 +30,7 @@ class WordModel {
   final String example;
   int counter;
   final String audioPath;
+  final String font;
 
   WordModel({
     this.id,
@@ -37,6 +40,7 @@ class WordModel {
     required this.example,
     required this.counter,
     required this.audioPath,
+    required this.font,
   });
 
   Map<String, Object?> toJson() => {
@@ -47,6 +51,7 @@ class WordModel {
         WordFields.example: example,
         WordFields.counter: counter,
         WordFields.audioPath: audioPath,
+        WordFields.font: font,
       };
 
   WordModel copy({
@@ -57,6 +62,7 @@ class WordModel {
     String? example,
     int? counter,
     String? audioPath,
+    String? font,
   }) =>
       WordModel(
         id: id ?? this.id,
@@ -66,6 +72,7 @@ class WordModel {
         example: example ?? this.example,
         counter: counter ?? this.counter,
         audioPath: audioPath ?? this.audioPath,
+        font: font ?? this.font,
       );
 
   static WordModel fromJson(Map<String, Object?> json) => WordModel(
@@ -76,5 +83,6 @@ class WordModel {
         example: json[WordFields.example] as String,
         counter: json[WordFields.counter] as int,
         audioPath: json[WordFields.audioPath] as String,
+        font: json[WordFields.font] as String,
       );
 }

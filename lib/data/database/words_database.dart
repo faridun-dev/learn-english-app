@@ -36,7 +36,8 @@ class WordsDatabase {
         ${WordFields.lessonNumber} $textType,
         ${WordFields.example} $textType,
         ${WordFields.counter} $numberType,
-        ${WordFields.audioPath} $textType
+        ${WordFields.audioPath} $textType,
+        ${WordFields.font} $textType
       )
     """);
   }
