@@ -123,8 +123,10 @@ class _GamesPageState extends State<GamesPage> {
     });
   }
 
-  void _checkForMatch() {
+  void _checkForMatch() async {
     if (selectedFirstWord!.translation == selectedSecondWord!.translation) {
+      selectedFirstWord!.counter++;
+      await WordsDatabase.instance.updateCounter(selectedFirstWord!);
       setState(() {
         int firstIndex = firstColumnWords.indexOf(selectedFirstWord);
         int secondIndex = secondColumnWords.indexOf(selectedSecondWord);

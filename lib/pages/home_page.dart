@@ -39,8 +39,6 @@ class _HomePageState extends State<HomePage> {
           chapterThree = true;
         });
       }
-    } else {
-      return false;
     }
   }
 
