@@ -2,17 +2,15 @@ import 'package:eng_game_app/components/constants.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class MenuCard extends StatelessWidget {
+class GameCard extends StatelessWidget {
   String title;
   void Function()? onPressed;
-  bool lock;
-  int learned;
-  MenuCard({
+  bool lock = false;
+  GameCard({
     super.key,
     required this.title,
     required this.onPressed,
     required this.lock,
-    required this.learned,
   });
 
   @override
@@ -44,17 +42,18 @@ class MenuCard extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                title,
-                style: TextStyle(
-                  color: !lock
-                      ? fontColorPrimary
-                      : const Color(0xFF205493).withOpacity(0.7),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 25,
+              Center(
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    color: !lock
+                        ? fontColorPrimary
+                        : const Color(0xFF205493).withOpacity(0.7),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                  ),
                 ),
               ),
-              Text("Learned: $learned/72"),
               Icon(
                 lock ? Icons.lock_rounded : Icons.lock_open_rounded,
               ),

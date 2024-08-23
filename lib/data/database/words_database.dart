@@ -37,7 +37,8 @@ class WordsDatabase {
         ${WordFields.example} $textType,
         ${WordFields.counter} $numberType,
         ${WordFields.audioPath} $textType,
-        ${WordFields.font} $textType
+        ${WordFields.font} $textType,
+        ${WordFields.chapterNumber} $textType
       )
     """);
   }
@@ -75,6 +76,22 @@ class WordsDatabase {
     return result.map((json) => WordModel.fromJson(json)).toList();
   }
 
+  Future<List<WordModel>> readChapter(String chapterNumber) async {
+    final db = await instance.database;
+
+    final data = await db.query(tableWords);
+
+    List<WordModel> result =
+        data.map((json) => WordModel.fromJson(json)).toList();
+
+    for (var word in result) {
+      if (word.chapterNumber != chapterNumber) {
+        result.remove(word);
+      }
+    }
+    return result;
+  }
+
   Future<List<WordModel>?> readLesson(String lesson) async {
     final db = await instance.database;
 
@@ -91,8 +108,6 @@ class WordsDatabase {
       return result.map((json) => WordModel.fromJson(json)).toList();
     }
   }
-
-
 
   Future<int> updateWord(WordModel word) async {
     final db = await instance.database;

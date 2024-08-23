@@ -51,7 +51,7 @@ class _GamesPageState extends State<GamesPage> {
     });
   }
 
-  void _handleCorrectAnswer() async {
+  void  _handleCorrectAnswer() async {
     if (!questionMark) {
       _progressValue += 0.01;
       words[currentIndex].counter++;
