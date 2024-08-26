@@ -52,8 +52,7 @@ class _LessonPageState extends State<LessonPage> {
         itemCount: words.length,
         itemBuilder: (context, index) {
           return WordCard(
-            word: words[index].word,
-            translation: words[index].translation,
+            word: words[index],
           );
         },
       ),
