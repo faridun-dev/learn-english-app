@@ -105,6 +105,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.3"
+  custom_switch_widget:
+    dependency: "direct main"
+    description:
+      name: custom_switch_widget
+      sha256: "9b0ea07bdaa8837c67a9d7f69085edd35efe677a06284040e2655a70b49e1b24"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1"
+  custom_switcher:
+    dependency: "direct main"
+    description:
+      name: custom_switcher
+      sha256: "917147a49b976874bda0c0b03de7a2c3dc5492c6671d36bbd35f0ee1e5d01ed1"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   fake_async:
     dependency: transitive
     description:
@@ -142,6 +158,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_advanced_switch:
+    dependency: "direct main"
+    description:
+      name: flutter_advanced_switch
+      sha256: e1147161a3dd9b708a71c65e76174d4d1a0a5908a571b8b38b65c79b142c52a0
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.0"
   flutter_lints:
     dependency: "direct dev"
     description:

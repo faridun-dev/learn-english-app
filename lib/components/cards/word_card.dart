@@ -1,4 +1,3 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:eng_game_app/components/styles.dart';
 import 'package:eng_game_app/data/models/word_model.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +18,7 @@ class WordCard extends StatelessWidget {
     return Expanded(
       child: GestureDetector(
         onTap: () {
+          //! We need real audio to use! We have just added test data.
           // final player = AudioPlayer();
           // player.play(AssetSource("path/to/audio/"));
           SystemSound.play(SystemSoundType.click);

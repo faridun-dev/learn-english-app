@@ -3,20 +3,20 @@ import 'package:eng_game_app/components/menu/lesson_card.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class ChapterPage extends StatefulWidget {
-  String chapterTitle;
+class ReferencePage extends StatefulWidget {
+  String chapter;
   List<int> lessons;
-  ChapterPage({
+  ReferencePage({
     super.key,
-    required this.chapterTitle,
+    required this.chapter,
     required this.lessons,
   });
 
   @override
-  State<ChapterPage> createState() => _ChapterPageState();
+  State<ReferencePage> createState() => _ReferencePageState();
 }
 
-class _ChapterPageState extends State<ChapterPage> {
+class _ReferencePageState extends State<ReferencePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,26 +28,8 @@ class _ChapterPageState extends State<ChapterPage> {
             color: actionBackColor,
           ),
         ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.pushNamed(
-                context,
-                "/referencePage",
-                arguments: {
-                  "chapter": widget.chapterTitle,
-                  "lessons": widget.lessons,
-                },
-              );
-            },
-            icon: const Icon(
-              Icons.book_rounded,
-              color: actionBackColor,
-            ),
-          ),
-        ],
         title: Text(
-          widget.chapterTitle,
+          "Reference for ${widget.chapter}",
         ),
       ),
       body: ListView.builder(
@@ -57,7 +39,7 @@ class _ChapterPageState extends State<ChapterPage> {
             title: "Lesson ${widget.lessons[index]}",
             onPressed: () {
               Navigator.of(context).pushNamed(
-                "/lesson",
+                "/referenceLesson",
                 arguments: {
                   "lessonNumber": "${widget.lessons[index]}",
                 },

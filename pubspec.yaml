@@ -8,8 +8,11 @@ environment:
 
 dependencies:
   audioplayers: ^6.0.0
+  custom_switch_widget: ^0.0.1
+  custom_switcher: ^1.0.0
   flutter:
     sdk: flutter
+  flutter_advanced_switch: ^3.1.0
   hive_flutter: ^1.1.0
   path: ^1.9.0
   sqflite: ^2.3.3+1
