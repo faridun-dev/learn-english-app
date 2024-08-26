@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 import 'package:eng_game_app/components/cards/alert_card.dart';
 import 'package:eng_game_app/components/cards/word_card.dart';
@@ -51,7 +52,7 @@ class _GamesPageState extends State<GamesPage> {
     });
   }
 
-  void  _handleCorrectAnswer() async {
+  void _handleCorrectAnswer() async {
     if (!questionMark) {
       _progressValue += 0.01;
       words[currentIndex].counter++;
@@ -99,7 +100,7 @@ class _GamesPageState extends State<GamesPage> {
                   Navigator.of(context).pop();
                 },
                 child: const Text(
-                  "Ok",
+                  "OK",
                   style: TextStyle(
                     color: appBarColor,
                   ),
@@ -119,7 +120,9 @@ class _GamesPageState extends State<GamesPage> {
       }
 
       if (selectedFirstWord != null && selectedSecondWord != null) {
-        _checkForMatch();
+        Timer.periodic(const Duration(seconds: 1), (timer) {
+          _checkForMatch();
+        });
       }
     });
   }
