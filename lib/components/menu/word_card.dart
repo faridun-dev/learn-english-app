@@ -16,6 +16,8 @@ class WordCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         SystemSound.play(SystemSoundType.click);
+        // final player = AudioPlayer();
+        // player.play(AssetSource("path/to/audio/"));
       },
       child: Padding(
         padding: const EdgeInsets.only(

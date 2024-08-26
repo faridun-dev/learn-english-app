@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:eng_game_app/components/styles.dart';
 import 'package:eng_game_app/data/models/word_model.dart';
 import 'package:flutter/material.dart';
@@ -15,11 +16,13 @@ class WordCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        SystemSound.play(SystemSoundType.click);
-      },
-      child: Expanded(
+    return Expanded(
+      child: GestureDetector(
+        onTap: () {
+          // final player = AudioPlayer();
+          // player.play(AssetSource("path/to/audio/"));
+          SystemSound.play(SystemSoundType.click);
+        },
         child: Container(
           width: double.infinity,
           decoration: wordCardDecoratiom,
