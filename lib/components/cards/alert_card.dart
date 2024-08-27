@@ -1,4 +1,3 @@
-import 'package:eng_game_app/components/styles.dart';
 import 'package:flutter/material.dart';
 
 class AlertCard extends StatelessWidget {
@@ -7,7 +6,11 @@ class AlertCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text(
+      backgroundColor: Theme.of(context).colorScheme.secondary,
+      title: Text(
+        style: TextStyle(
+          color: Theme.of(context).colorScheme.tertiary,
+        ),
         "Please reveal word translation",
       ),
       actions: [
@@ -15,9 +18,11 @@ class AlertCard extends StatelessWidget {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: const Text(
+          child: Text(
             "Back",
-            style: alertDialogTextStyle,
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.primary,
+            ),
           ),
         ),
       ],

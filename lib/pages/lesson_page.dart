@@ -1,4 +1,3 @@
-import 'package:eng_game_app/components/constants.dart';
 import 'package:eng_game_app/components/menu/word_card.dart';
 import 'package:eng_game_app/data/database/words_database.dart';
 import 'package:eng_game_app/data/models/word_model.dart';
@@ -37,15 +36,20 @@ class _LessonPageState extends State<LessonPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         leading: IconButton(
           onPressed: () => Navigator.of(context).pop(),
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back_ios_rounded,
-            color: actionBackColor,
+            color: Theme.of(context).colorScheme.surface,
           ),
         ),
         title: Text(
           "Lesson ${widget.lessonNumber}",
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.surface,
+          ),
         ),
       ),
       body: ListView.builder(

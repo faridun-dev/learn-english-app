@@ -1,4 +1,3 @@
-import 'package:eng_game_app/components/constants.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -28,13 +27,15 @@ class GameCard extends StatelessWidget {
             30,
           ),
           decoration: BoxDecoration(
-            color: !lock ? menuCardColor : Colors.white70,
+            color: !lock
+                ? Theme.of(context).colorScheme.surface
+                : Theme.of(context).colorScheme.secondaryContainer,
             borderRadius: BorderRadius.circular(
               10,
             ),
             boxShadow: [
               BoxShadow(
-                color: menuCardShadow,
+                color: Theme.of(context).colorScheme.shadow,
                 blurRadius: 6,
               ),
             ],
@@ -47,8 +48,11 @@ class GameCard extends StatelessWidget {
                   title,
                   style: TextStyle(
                     color: !lock
-                        ? fontColorPrimary
-                        : const Color(0xFF205493).withOpacity(0.7),
+                        ? Theme.of(context).colorScheme.primary
+                        : Theme.of(context)
+                            .colorScheme
+                            .primary
+                            .withOpacity(0.7),
                     fontWeight: FontWeight.bold,
                     fontSize: 25,
                   ),

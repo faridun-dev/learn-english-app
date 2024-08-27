@@ -1,7 +1,5 @@
-import 'package:eng_game_app/components/constants.dart';
 import 'package:eng_game_app/components/menu/game_card.dart';
 import 'package:eng_game_app/components/menu/menu_card.dart';
-import 'package:eng_game_app/components/styles.dart';
 import 'package:eng_game_app/data/database/words_database.dart';
 import 'package:eng_game_app/data/initial_date.dart';
 import 'package:eng_game_app/data/models/word_model.dart';
@@ -126,12 +124,15 @@ class _HomePageState extends State<HomePage> {
     ];
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           "Изучение английского языка",
-          style: appBarTextStyle,
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.surface,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         centerTitle: true,
-        backgroundColor: appBarColor,
+        backgroundColor: Theme.of(context).colorScheme.primary,
       ),
       body: ListView.builder(
         itemCount: chapters.length,

@@ -2,8 +2,6 @@ import 'dart:async';
 import 'dart:math';
 import 'package:eng_game_app/components/cards/alert_card.dart';
 import 'package:eng_game_app/components/cards/word_card.dart';
-import 'package:eng_game_app/components/constants.dart';
-import 'package:eng_game_app/components/styles.dart';
 import 'package:eng_game_app/data/database/words_database.dart';
 import 'package:eng_game_app/data/models/word_model.dart';
 import 'package:flutter/material.dart';
@@ -90,19 +88,27 @@ class _GamesPageState extends State<GamesPage> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: const Text("Game is over"),
-            content:
-                const Text("Congratulations! You've matched all the words!"),
+            backgroundColor: Theme.of(context).colorScheme.secondary,
+            title: Text(
+              "Game is over",
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.tertiary,
+              ),
+            ),
+            content: Text(
+              "Congratulations! You've matched all the words!",
+              style: TextStyle(color: Theme.of(context).colorScheme.tertiary),
+            ),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                   Navigator.of(context).pop();
                 },
-                child: const Text(
+                child: Text(
                   "OK",
                   style: TextStyle(
-                    color: appBarColor,
+                    color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
               ),
@@ -153,12 +159,21 @@ class _GamesPageState extends State<GamesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         leading: IconButton(
           onPressed: () => Navigator.of(context).pop(),
-          icon:
-              const Icon(Icons.arrow_back_ios_rounded, color: actionBackColor),
+          icon: Icon(
+            Icons.arrow_back_ios_rounded,
+            color: Theme.of(context).colorScheme.surface,
+          ),
         ),
-        title: const Text("Games"),
+        title: Text(
+          "Games",
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.surface,
+          ),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(10),
@@ -181,8 +196,8 @@ class _GamesPageState extends State<GamesPage> {
         LinearProgressIndicator(
           minHeight: 10,
           borderRadius: BorderRadius.circular(12),
-          backgroundColor: Colors.white,
-          color: appBarColor,
+          backgroundColor: Theme.of(context).colorScheme.surface,
+          color: Theme.of(context).colorScheme.primary,
           value: _progressValue,
         ),
         Text("${(_progressValue * 100).round()}%")
@@ -213,11 +228,17 @@ class _GamesPageState extends State<GamesPage> {
       },
       child: Container(
         width: double.infinity,
-        decoration: translationCardBoxDecoration,
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.primary,
+          borderRadius: BorderRadius.circular(10),
+        ),
         child: Center(
           child: Text(
-            questionMark ? "?" : words[currentIndex].translation,
-            style: translationCardTextStyle,
+            questionMark ? "TAP" : words[currentIndex].translation,
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.surface,
+              fontSize: 60,
+            ),
           ),
         ),
       ),
@@ -237,7 +258,15 @@ class _GamesPageState extends State<GamesPage> {
   Widget _buildAnswerButton(String label, Color color, VoidCallback onPressed) {
     return TextButton(
       onPressed: onPressed,
-      style: answerButtonStyle,
+      style: TextButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(
+            12,
+          ),
+        ),
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        minimumSize: const Size(150, 50),
+      ),
       child: Text(
         label,
         style: TextStyle(
@@ -268,13 +297,17 @@ class _GamesPageState extends State<GamesPage> {
                               decoration: BoxDecoration(
                                 color: selectedFirstWord == word
                                     ? Colors.green
-                                    : appBarColor,
+                                    : Theme.of(context).colorScheme.primary,
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Center(
                                 child: Text(
                                   word.word,
-                                  style: matchGameCardTextStyle,
+                                  style: TextStyle(
+                                    color:
+                                        Theme.of(context).colorScheme.surface,
+                                    fontSize: 25,
+                                  ),
                                 ),
                               ),
                             )
@@ -302,13 +335,17 @@ class _GamesPageState extends State<GamesPage> {
                               decoration: BoxDecoration(
                                 color: selectedSecondWord == word
                                     ? Colors.green
-                                    : appBarColor,
+                                    : Theme.of(context).colorScheme.primary,
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Center(
                                 child: Text(
                                   word.translation,
-                                  style: matchGameCardTextStyle,
+                                  style: TextStyle(
+                                    color:
+                                        Theme.of(context).colorScheme.surface,
+                                    fontSize: 25,
+                                  ),
                                 ),
                               ),
                             )

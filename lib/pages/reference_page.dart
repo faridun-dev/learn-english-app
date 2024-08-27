@@ -1,4 +1,3 @@
-import 'package:eng_game_app/components/constants.dart';
 import 'package:eng_game_app/components/menu/lesson_card.dart';
 import 'package:flutter/material.dart';
 
@@ -21,15 +20,20 @@ class _ReferencePageState extends State<ReferencePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         leading: IconButton(
           onPressed: () => Navigator.of(context).pop(),
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back_ios_rounded,
-            color: actionBackColor,
+            color: Theme.of(context).colorScheme.surface,
           ),
         ),
         title: Text(
           "Reference for ${widget.chapter}",
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.surface,
+          ),
         ),
       ),
       body: ListView.builder(

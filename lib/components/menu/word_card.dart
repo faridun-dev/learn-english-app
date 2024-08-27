@@ -1,4 +1,3 @@
-import 'package:eng_game_app/components/styles.dart';
 import 'package:eng_game_app/data/models/word_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -29,19 +28,37 @@ class WordCard extends StatelessWidget {
           padding: const EdgeInsets.all(
             30,
           ),
-          decoration: wordCardBoxDecoration,
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.surface,
+            borderRadius: BorderRadius.circular(
+              10,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Theme.of(context).colorScheme.shadow,
+                blurRadius: 6,
+              ),
+            ],
+          ),
           child: Column(
             children: [
               Text(
                 word.word,
-                style: wordTextStyle,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.primary,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 50,
+                ),
               ),
               const SizedBox(
                 height: 10,
               ),
               Text(
                 word.translation,
-                style: translationTextStyle,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.secondaryFixed,
+                  fontSize: 25,
+                ),
               ),
             ],
           ),

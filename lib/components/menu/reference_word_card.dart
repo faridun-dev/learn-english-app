@@ -1,5 +1,3 @@
-import 'package:eng_game_app/components/constants.dart';
-import 'package:eng_game_app/components/styles.dart';
 import 'package:eng_game_app/data/database/words_database.dart';
 import 'package:eng_game_app/data/models/word_model.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +43,18 @@ class _ReferenceWordCardState extends State<ReferenceWordCard> {
           padding: const EdgeInsets.all(
             30,
           ),
-          decoration: wordCardBoxDecoration,
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.surface,
+            borderRadius: BorderRadius.circular(
+              10,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Theme.of(context).colorScheme.shadow,
+                blurRadius: 6,
+              ),
+            ],
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -53,14 +62,21 @@ class _ReferenceWordCardState extends State<ReferenceWordCard> {
                 children: [
                   Text(
                     widget.word.word,
-                    style: wordTextStyle,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 50,
+                    ),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
                   Text(
                     widget.word.translation,
-                    style: translationTextStyle,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.secondaryFixed,
+                      fontSize: 25,
+                    ),
                   ),
                 ],
               ),
@@ -75,7 +91,7 @@ class _ReferenceWordCardState extends State<ReferenceWordCard> {
                         await WordsDatabase.instance.updateCounter(widget.word);
                       }
                     : null,
-                activeColor: appBarColor,
+                activeColor: Theme.of(context).colorScheme.primary,
               ),
             ],
           ),

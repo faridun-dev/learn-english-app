@@ -1,4 +1,3 @@
-import 'package:eng_game_app/components/styles.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -25,11 +24,26 @@ class LessonCard extends StatelessWidget {
           padding: const EdgeInsets.all(
             22,
           ),
-          decoration: lessonCardBoxDecoration,
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.surface,
+            borderRadius: BorderRadius.circular(
+              10,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Theme.of(context).colorScheme.shadow,
+                blurRadius: 6,
+              ),
+            ],
+          ),
           child: Center(
             child: Text(
               title,
-              style: lessonCardTextStyle
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.primary,
+                fontWeight: FontWeight.bold,
+                fontSize: 25,
+              ),
             ),
           ),
         ),

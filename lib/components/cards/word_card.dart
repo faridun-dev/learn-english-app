@@ -1,4 +1,3 @@
-import 'package:eng_game_app/components/styles.dart';
 import 'package:eng_game_app/data/models/word_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -25,11 +24,17 @@ class WordCard extends StatelessWidget {
         },
         child: Container(
           width: double.infinity,
-          decoration: wordCardDecoratiom,
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.primary,
+            borderRadius: BorderRadius.circular(10),
+          ),
           child: Center(
             child: Text(
               words[currentIndex].word,
-              style: wordCardTextStyle,
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.surface,
+                fontSize: 60,
+              ),
             ),
           ),
         ),

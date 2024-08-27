@@ -1,5 +1,5 @@
 import 'package:eng_game_app/components/route.dart';
-import 'package:eng_game_app/components/themes.dart';
+import 'package:eng_game_app/theme/theme.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
@@ -14,7 +14,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: routes,
-      theme: themeData,
+      theme: lightMode,
       debugShowCheckedModeBanner: false,
     );
   }
