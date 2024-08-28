@@ -55,9 +55,15 @@ class MenuCard extends StatelessWidget {
                   fontSize: 25,
                 ),
               ),
-              Text("Learned: $learned/72"),
+              Text(
+                "Learned: $learned/72",
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.tertiary,
+                ),
+              ),
               Icon(
                 lock ? Icons.lock_rounded : Icons.lock_open_rounded,
+                color: Theme.of(context).colorScheme.tertiary,
               ),
             ],
           ),

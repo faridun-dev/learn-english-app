@@ -15,6 +15,7 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       routes: routes,
       theme: lightMode,
+      darkTheme: darkMode,
       debugShowCheckedModeBanner: false,
     );
   }

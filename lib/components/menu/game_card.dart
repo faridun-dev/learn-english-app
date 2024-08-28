@@ -60,6 +60,7 @@ class GameCard extends StatelessWidget {
               ),
               Icon(
                 lock ? Icons.lock_rounded : Icons.lock_open_rounded,
+                color: Theme.of(context).colorScheme.tertiary,
               ),
             ],
           ),
