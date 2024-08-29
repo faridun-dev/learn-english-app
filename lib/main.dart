@@ -1,10 +1,17 @@
 import 'package:eng_game_app/components/route.dart';
 import 'package:eng_game_app/theme/theme.dart';
+import 'package:eng_game_app/theme/theme_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MainApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+      child: const MainApp(),
+    ),
+  );
 }
 
 class MainApp extends StatelessWidget {
@@ -14,7 +21,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: routes,
-      theme: lightMode,
+      theme: Provider.of<ThemeProvider>(context).themeData,
       darkTheme: darkMode,
       debugShowCheckedModeBanner: false,
     );

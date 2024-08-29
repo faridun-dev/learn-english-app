@@ -1,5 +1,7 @@
+import 'package:eng_game_app/theme/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_switch/flutter_advanced_switch.dart';
+import 'package:provider/provider.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -10,7 +12,6 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   String dropDownValue = "Russian";
-  final bool _checkedTheme = false;
   final bool _checkedSound = false;
 
   List items = [
@@ -20,6 +21,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final bool checkedTheme = Provider.of<ThemeProvider>(context).checked;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -54,9 +56,12 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                 ),
                 AdvancedSwitch(
-                  initialValue: _checkedTheme,
+                  initialValue: checkedTheme,
                   activeColor: Theme.of(context).colorScheme.primary,
-                  onChanged: (value) {},
+                  onChanged: (value) {
+                    Provider.of<ThemeProvider>(context, listen: false)
+                        .toggleTheme();
+                  },
                 ),
               ],
             ),
