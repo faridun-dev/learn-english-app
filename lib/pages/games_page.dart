@@ -126,9 +126,7 @@ class _GamesPageState extends State<GamesPage> {
       }
 
       if (selectedFirstWord != null && selectedSecondWord != null) {
-        Timer.periodic(const Duration(seconds: 1), (timer) {
           _checkForMatch();
-        });
       }
     });
   }
