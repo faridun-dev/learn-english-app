@@ -1,5 +1,4 @@
 import 'package:eng_game_app/components/route.dart';
-import 'package:eng_game_app/theme/theme.dart';
 import 'package:eng_game_app/theme/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +21,6 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       routes: routes,
       theme: Provider.of<ThemeProvider>(context).themeData,
-      darkTheme: darkMode,
       debugShowCheckedModeBanner: false,
     );
   }
