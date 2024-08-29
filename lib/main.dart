@@ -1,4 +1,5 @@
 import 'package:eng_game_app/components/route.dart';
+import 'package:eng_game_app/providers/sound_provider.dart';
 import 'package:eng_game_app/theme/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -6,8 +7,15 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => ThemeProvider(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => ThemeProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => SoundProvider(),
+        ),
+      ],
       child: const MainApp(),
     ),
   );
