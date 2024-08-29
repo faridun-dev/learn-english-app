@@ -123,6 +123,17 @@ class _HomePageState extends State<HomePage> {
       },
     ];
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        shape: const CircleBorder(),
+        foregroundColor: Theme.of(context).colorScheme.tertiary,
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        child: const Icon(
+          Icons.settings,
+        ),
+        onPressed: () {
+          Navigator.of(context).pushNamed("/settings");
+        },
+      ),
       appBar: AppBar(
         title: Text(
           "Изучение английского языка",
@@ -134,7 +145,7 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.primary,
       ),
-      body: ListView.builder(
+      body: ListView.builder( 
         itemCount: chapters.length,
         itemBuilder: (context, index) {
           final chapter = chapters[index];

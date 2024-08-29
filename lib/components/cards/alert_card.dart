@@ -6,7 +6,7 @@ class AlertCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: Theme.of(context).colorScheme.secondary,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       title: Text(
         style: TextStyle(
           color: Theme.of(context).colorScheme.tertiary,

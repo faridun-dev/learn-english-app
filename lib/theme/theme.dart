@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 ThemeData lightMode = ThemeData(
+  fontFamily: "Sans Pro 3",
   scaffoldBackgroundColor: const Color(0xFFE6E6E6),
   colorScheme: ColorScheme.light(
     primary: const Color(0xFF205493),
@@ -14,6 +15,7 @@ ThemeData lightMode = ThemeData(
 );
 
 ThemeData darkMode = ThemeData(
+  fontFamily: "Sans Pro 3",
   scaffoldBackgroundColor: const Color.fromARGB(154, 230, 230, 230),
   colorScheme: ColorScheme.dark(
     primary: Colors.white,

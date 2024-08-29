@@ -4,6 +4,7 @@ import 'package:eng_game_app/pages/home_page.dart';
 import 'package:eng_game_app/pages/lesson_page.dart';
 import 'package:eng_game_app/pages/reference_lesson_page.dart';
 import 'package:eng_game_app/pages/reference_page.dart';
+import 'package:eng_game_app/pages/settings_page.dart';
 import 'package:flutter/material.dart';
 
 final Map<String, WidgetBuilder> routes = {
@@ -32,5 +33,6 @@ final Map<String, WidgetBuilder> routes = {
   "/referenceLesson": (context) {
     final args = ModalRoute.of(context)!.settings.arguments as Map;
     return ReferenceLessonPage(lessonNumber: args["lessonNumber"]);
-  }
+  },
+  "/settings": (context) => const SettingsPage(),
 };
