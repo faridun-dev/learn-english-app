@@ -126,15 +126,21 @@ class _GamesPageState extends State<GamesPage> {
       }
 
       if (selectedFirstWord != null && selectedSecondWord != null) {
-          _checkForMatch();
+        _checkForMatch();
       }
     });
   }
 
   void _checkForMatch() async {
     if (selectedFirstWord!.translation == selectedSecondWord!.translation) {
-      selectedFirstWord!.counter++;
+      setState(() {
+        selectedFirstWord!.counter++;
+      });
       await WordsDatabase.instance.updateCounter(selectedFirstWord!);
+
+      await Future.delayed(const Duration(seconds: 1)); // Wait for 1 second
+
+      // Update the state after the delay
       setState(() {
         int firstIndex = firstColumnWords.indexOf(selectedFirstWord);
         int secondIndex = secondColumnWords.indexOf(selectedSecondWord);
@@ -144,13 +150,16 @@ class _GamesPageState extends State<GamesPage> {
 
         _progressValue += 0.1; // Increment progress
       });
+
+      // Check if the game is over
       if (firstColumnWords.every((word) => word == null) &&
           secondColumnWords.every((word) => word == null)) {
         _gameOver();
       }
+    } else {
+      selectedFirstWord = null;
+      selectedSecondWord = null;
     }
-    selectedFirstWord = null;
-    selectedSecondWord = null;
   }
 
   @override
