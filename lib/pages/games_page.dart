@@ -23,6 +23,7 @@ class _GamesPageState extends State<GamesPage> {
   List<WordModel?> secondColumnWords = [];
   WordModel? selectedFirstWord;
   WordModel? selectedSecondWord;
+  bool isWrong = false;
 
   @override
   void initState() {
@@ -44,7 +45,7 @@ class _GamesPageState extends State<GamesPage> {
 
     setState(() {
       words = filteredWords.take(6).toList();
-      matchGameWords = matchGameFilteredWords.take(6).toList();
+      matchGameWords = words.toList();
       firstColumnWords = List.from(matchGameWords);
       secondColumnWords = List.from(matchGameWords)..shuffle(random);
     });
@@ -138,7 +139,9 @@ class _GamesPageState extends State<GamesPage> {
       });
       await WordsDatabase.instance.updateCounter(selectedFirstWord!);
 
-      await Future.delayed(const Duration(seconds: 1)); // Wait for 1 second
+      await Future.delayed(const Duration(
+        milliseconds: 600,
+      )); // Wait for 1 second
 
       // Update the state after the delay
       setState(() {
@@ -149,6 +152,8 @@ class _GamesPageState extends State<GamesPage> {
         secondColumnWords[secondIndex] = null;
 
         _progressValue += 0.1; // Increment progress
+        selectedFirstWord = null;
+        selectedSecondWord = null;
       });
 
       // Check if the game is over
@@ -157,8 +162,17 @@ class _GamesPageState extends State<GamesPage> {
         _gameOver();
       }
     } else {
-      selectedFirstWord = null;
-      selectedSecondWord = null;
+      setState(() {
+        isWrong = true;
+      });
+
+      await Future.delayed(const Duration(milliseconds: 400));
+
+      setState(() {
+        isWrong = false;
+        selectedFirstWord = null;
+        selectedSecondWord = null;
+      });
     }
   }
 
@@ -303,7 +317,7 @@ class _GamesPageState extends State<GamesPage> {
                               width: double.infinity,
                               decoration: BoxDecoration(
                                 color: selectedFirstWord == word
-                                    ? Colors.green
+                                    ? (isWrong ? Colors.red : Colors.green)
                                     : Theme.of(context).colorScheme.primary,
                                 borderRadius: BorderRadius.circular(10),
                               ),
@@ -341,7 +355,7 @@ class _GamesPageState extends State<GamesPage> {
                               width: double.infinity,
                               decoration: BoxDecoration(
                                 color: selectedSecondWord == word
-                                    ? Colors.green
+                                    ? (isWrong ? Colors.red : Colors.green)
                                     : Theme.of(context).colorScheme.primary,
                                 borderRadius: BorderRadius.circular(10),
                               ),
