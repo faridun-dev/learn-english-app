@@ -29,24 +29,6 @@ class _ChapterPageState extends State<ChapterPage> {
             color: Theme.of(context).colorScheme.surface,
           ),
         ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.pushNamed(
-                context,
-                "/referencePage",
-                arguments: {
-                  "chapter": widget.chapterTitle,
-                  "lessons": widget.lessons,
-                },
-              );
-            },
-            icon: Icon(
-              Icons.book_rounded,
-              color: Theme.of(context).colorScheme.surface,
-            ),
-          ),
-        ],
         title: Text(
           widget.chapterTitle,
           style: TextStyle(

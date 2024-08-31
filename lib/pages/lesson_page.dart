@@ -45,6 +45,23 @@ class _LessonPageState extends State<LessonPage> {
             color: Theme.of(context).colorScheme.surface,
           ),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.pushNamed(
+                context,
+                "/referenceLesson",
+                arguments: {
+                  "lessonNumber":widget.lessonNumber,
+                },
+              );
+            },
+            icon: Icon(
+              Icons.book_rounded,
+              color: Theme.of(context).colorScheme.surface,
+            ),
+          ),
+        ],
         title: Text(
           "Lesson ${widget.lessonNumber}",
           style: TextStyle(

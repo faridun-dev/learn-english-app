@@ -45,21 +45,28 @@ class MenuCard extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                title,
-                style: TextStyle(
-                  color: !lock
-                      ? Theme.of(context).colorScheme.primary
-                      : Theme.of(context).colorScheme.primary.withOpacity(0.7),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 25,
-                ),
-              ),
-              Text(
-                "Learned: $learned/72",
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.tertiary,
-                ),
+              Column(
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(
+                      color: !lock
+                          ? Theme.of(context).colorScheme.primary
+                          : Theme.of(context)
+                              .colorScheme
+                              .primary
+                              .withOpacity(0.7),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25,
+                    ),
+                  ),
+                  Text(
+                    "Learned: $learned/72",
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.tertiary,
+                    ),
+                  ),
+                ],
               ),
               Icon(
                 lock ? Icons.lock_rounded : Icons.lock_open_rounded,

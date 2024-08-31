@@ -3,7 +3,6 @@ import 'package:eng_game_app/pages/games_page.dart';
 import 'package:eng_game_app/pages/home_page.dart';
 import 'package:eng_game_app/pages/lesson_page.dart';
 import 'package:eng_game_app/pages/reference_lesson_page.dart';
-import 'package:eng_game_app/pages/reference_page.dart';
 import 'package:eng_game_app/pages/settings_page.dart';
 import 'package:flutter/material.dart';
 
@@ -23,13 +22,6 @@ final Map<String, WidgetBuilder> routes = {
     );
   },
   "/games": (context) => const GamesPage(),
-  "/referencePage": (context) {
-    final args = ModalRoute.of(context)!.settings.arguments as Map;
-    return ReferencePage(
-      chapter: args["chapter"],
-      lessons: args["lessons"],
-    );
-  },
   "/referenceLesson": (context) {
     final args = ModalRoute.of(context)!.settings.arguments as Map;
     return ReferenceLessonPage(lessonNumber: args["lessonNumber"]);

@@ -39,10 +39,6 @@ class _GamesPageState extends State<GamesPage> {
         fetchedWords.where((word) => word.counter < 20).toList();
     filteredWords.shuffle(random);
 
-    List<WordModel> matchGameFilteredWords =
-        fetchedWords.where((word) => word.counter < 20).toList();
-    matchGameFilteredWords.shuffle(random);
-
     setState(() {
       words = filteredWords.take(6).toList();
       matchGameWords = words.toList();
