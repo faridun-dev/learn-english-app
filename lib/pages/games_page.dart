@@ -43,11 +43,49 @@ class _GamesPageState extends State<GamesPage> {
   WordModel? selectedSecondWord;
   bool isWrong = false;
 
+  int seconds = 10;
+  Timer? _timer;
+
   @override
   void initState() {
     _progressValue = 0;
     _initializeGame();
     super.initState();
+  }
+
+  void startTimer() {
+    bool isRunning = _timer == null ? false : _timer!.isActive;
+
+    if (isRunning) {
+      stopTimer();
+    }
+
+    setState(() {
+      seconds = 10;
+    });
+    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      if (seconds > 0) {
+        setState(() {
+          seconds--;
+        });
+      } else {
+        timeOut();
+      }
+    });
+  }
+
+  void timeOut() {
+    setState(() {
+      lives--;
+      livesIcons.removeLast();
+    });
+    _livesCheck();
+    _nextPair();
+    startTimer();
+  }
+
+  void stopTimer() {
+    _timer!.cancel();
   }
 
   Future<void> _initializeGame() async {
@@ -63,6 +101,7 @@ class _GamesPageState extends State<GamesPage> {
       firstColumnWords = List.from(matchGameWords);
       secondColumnWords = List.from(matchGameWords)..shuffle(random);
     });
+    startTimer();
   }
 
   void _handleCorrectAnswer() async {
@@ -71,6 +110,7 @@ class _GamesPageState extends State<GamesPage> {
       words[currentIndex].counter++;
       await WordsDatabase.instance.updateCounter(words[currentIndex]);
       _nextPair();
+      startTimer();
     } else {
       _showAlert();
     }
@@ -84,6 +124,7 @@ class _GamesPageState extends State<GamesPage> {
       });
       _livesCheck();
       _nextPair();
+      startTimer();
     } else {
       _showAlert();
     }
@@ -91,6 +132,7 @@ class _GamesPageState extends State<GamesPage> {
 
   void _livesCheck() {
     if (lives < 1) {
+      stopTimer();
       showDialog(
           barrierDismissible: false,
           context: context,
@@ -141,15 +183,16 @@ class _GamesPageState extends State<GamesPage> {
   }
 
   void _gameOver() {
+    stopTimer();
     showDialog(
         barrierDismissible: false,
         context: context,
         builder: (context) {
           return AlertDialog(
             backgroundColor:
-                  Provider.of<ThemeProvider>(context).themeData == lightMode
-                      ? Theme.of(context).scaffoldBackgroundColor
-                      : Colors.grey,
+                Provider.of<ThemeProvider>(context).themeData == lightMode
+                    ? Theme.of(context).scaffoldBackgroundColor
+                    : Colors.grey,
             title: Text(
               "Game is over",
               style: TextStyle(
@@ -188,6 +231,7 @@ class _GamesPageState extends State<GamesPage> {
 
       if (selectedFirstWord != null && selectedSecondWord != null) {
         _checkForMatch();
+        startTimer();
       }
     });
   }
@@ -305,7 +349,22 @@ class _GamesPageState extends State<GamesPage> {
           color: Theme.of(context).colorScheme.primary,
           value: _progressValue,
         ),
-        Text("${(_progressValue * 100).round()}%")
+        Text("${(_progressValue * 100).round()}%"),
+        TweenAnimationBuilder<double>(
+          tween: Tween<double>(
+            begin: 1.0,
+            end: seconds / 10,
+          ),
+          duration: const Duration(milliseconds: 1000),
+          builder: (context, value, child) {
+            return LinearProgressIndicator(
+              minHeight: 10,
+              backgroundColor: Theme.of(context).colorScheme.surface,
+              color: Theme.of(context).colorScheme.primary,
+              value: value,
+            );
+          },
+        )
       ],
     );
   }
