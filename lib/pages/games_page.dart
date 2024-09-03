@@ -4,7 +4,10 @@ import 'package:eng_game_app/components/cards/alert_card.dart';
 import 'package:eng_game_app/components/cards/word_card.dart';
 import 'package:eng_game_app/data/database/words_database.dart';
 import 'package:eng_game_app/data/models/word_model.dart';
+import 'package:eng_game_app/theme/theme.dart';
+import 'package:eng_game_app/theme/theme_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class GamesPage extends StatefulWidget {
   const GamesPage({super.key});
@@ -14,6 +17,21 @@ class GamesPage extends StatefulWidget {
 }
 
 class _GamesPageState extends State<GamesPage> {
+  int lives = 3;
+  List<Widget> livesIcons = [
+    const Icon(
+      Icons.health_and_safety,
+      size: 35,
+    ),
+    const Icon(
+      Icons.health_and_safety,
+      size: 35,
+    ),
+    const Icon(
+      Icons.health_and_safety,
+      size: 35,
+    ),
+  ];
   bool questionMark = true;
   int currentIndex = 0;
   late double _progressValue;
@@ -60,9 +78,50 @@ class _GamesPageState extends State<GamesPage> {
 
   void _handleIncorrectAnswer() {
     if (!questionMark) {
+      setState(() {
+        lives--;
+        livesIcons.removeLast();
+      });
+      _livesCheck();
       _nextPair();
     } else {
       _showAlert();
+    }
+  }
+
+  void _livesCheck() {
+    if (lives < 1) {
+      showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              backgroundColor:
+                  Provider.of<ThemeProvider>(context).themeData == lightMode
+                      ? Theme.of(context).scaffoldBackgroundColor
+                      : Colors.grey,
+              title: Text(
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.tertiary,
+                ),
+                "Game is over. All lives are wasted",
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(
+                    "Go back to main",
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                ),
+              ],
+            );
+          });
     }
   }
 
@@ -75,6 +134,7 @@ class _GamesPageState extends State<GamesPage> {
 
   void _showAlert() {
     showDialog(
+      barrierDismissible: false,
       context: context,
       builder: (context) => const AlertCard(),
     );
@@ -82,10 +142,14 @@ class _GamesPageState extends State<GamesPage> {
 
   void _gameOver() {
     showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (context) {
           return AlertDialog(
-            backgroundColor: Theme.of(context).colorScheme.secondary,
+            backgroundColor:
+                  Provider.of<ThemeProvider>(context).themeData == lightMode
+                      ? Theme.of(context).scaffoldBackgroundColor
+                      : Colors.grey,
             title: Text(
               "Game is over",
               style: TextStyle(
@@ -168,7 +232,10 @@ class _GamesPageState extends State<GamesPage> {
         isWrong = false;
         selectedFirstWord = null;
         selectedSecondWord = null;
+        lives--;
+        livesIcons.removeLast();
       });
+      _livesCheck();
     }
   }
 
@@ -196,15 +263,36 @@ class _GamesPageState extends State<GamesPage> {
         padding: const EdgeInsets.all(10),
         child: Column(
           children: [
+            _buildLivesIndicator(),
             _buildProgressIndicator(),
             const SizedBox(height: 10),
             words.length > currentIndex
                 ? _buildGameContent()
-                : _buildMatchGame(),
+                : _buildMatchGame()
           ],
         ),
       ),
     );
+  }
+
+  Widget _buildLivesIndicator() {
+    return livesIcons.isNotEmpty
+        ? Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: livesIcons.map((live) => live).toList(),
+            ),
+          )
+        : const Padding(
+            padding: EdgeInsets.all(10.0),
+            child: Text(
+              "Lives are wasted",
+              style: TextStyle(
+                fontSize: 30,
+              ),
+            ),
+          );
   }
 
   Widget _buildProgressIndicator() {

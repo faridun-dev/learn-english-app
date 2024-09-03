@@ -1,4 +1,7 @@
+import 'package:eng_game_app/theme/theme.dart';
+import 'package:eng_game_app/theme/theme_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AlertCard extends StatelessWidget {
   const AlertCard({super.key});
@@ -6,7 +9,10 @@ class AlertCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor:
+          Provider.of<ThemeProvider>(context).themeData == lightMode
+              ? Theme.of(context).scaffoldBackgroundColor
+              : Colors.grey,
       title: Text(
         style: TextStyle(
           color: Theme.of(context).colorScheme.tertiary,
