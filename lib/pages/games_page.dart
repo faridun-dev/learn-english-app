@@ -32,6 +32,7 @@ class _GamesPageState extends State<GamesPage> {
   int currentIndex = 0;
   late double _progressValue;
   late List<WordModel> words = [];
+  late List<WordModel> randomWords = [];
   late List<WordModel> matchGameWords = [];
   List<WordModel?> firstColumnWords = [];
   List<WordModel?> secondColumnWords = [];
@@ -95,20 +96,34 @@ class _GamesPageState extends State<GamesPage> {
 
     setState(() {
       words = filteredWords.take(6).toList();
+      randomWords = filteredWords.take(6).toList();
       matchGameWords = words.toList();
       firstColumnWords = List.from(matchGameWords);
       secondColumnWords = List.from(matchGameWords)..shuffle(random);
     });
+    randomWords.shuffle(random);
     startTimer();
   }
 
   void _handleCorrectAnswer() async {
     if (!questionMark) {
-      _progressValue += 0.01;
-      words[currentIndex].counter++;
-      await WordsDatabase.instance.updateCounter(words[currentIndex]);
-      _nextPair();
-      startTimer();
+      if (words[currentIndex].translation ==
+          randomWords[currentIndex].translation) {
+        _progressValue += 0.01;
+        words[currentIndex].counter++;
+        await WordsDatabase.instance.updateCounter(words[currentIndex]);
+        _nextPair();
+        startTimer();
+        _livesCheck();
+      } else {
+        setState(() {
+          lives--;
+          livesIcons.removeLast();
+        });
+        _nextPair();
+        startTimer();
+        _livesCheck();
+      }
     } else {
       _showAlert();
     }
@@ -116,15 +131,24 @@ class _GamesPageState extends State<GamesPage> {
 
   void _handleIncorrectAnswer() {
     if (!questionMark) {
-      setState(() {
-        lives--;
-        livesIcons.removeLast();
-      });
-      if (lives > 0) {
-        startTimer();
-        _nextPair();
+      if (words[currentIndex].translation !=
+          randomWords[currentIndex].translation) {
+        if (lives > 0) {
+          startTimer();
+          _nextPair();
+        }
+        _livesCheck();
+      } else {
+        setState(() {
+          lives--;
+          livesIcons.removeLast();
+        });
+        if (lives > 0) {
+          startTimer();
+          _nextPair();
+        }
+        _livesCheck();
       }
-      _livesCheck();
     } else {
       _showAlert();
     }
@@ -258,6 +282,7 @@ class _GamesPageState extends State<GamesPage> {
         selectedFirstWord = null;
         selectedSecondWord = null;
       });
+      startTimer();
 
       // Check if the game is over
       if (firstColumnWords.every((word) => word == null) &&
@@ -402,7 +427,7 @@ class _GamesPageState extends State<GamesPage> {
         ),
         child: Center(
           child: Text(
-            questionMark ? "TAP" : words[currentIndex].translation,
+            questionMark ? "TAP" : randomWords[currentIndex].translation,
             style: TextStyle(
               color: Theme.of(context).colorScheme.surface,
               fontSize: 60,
