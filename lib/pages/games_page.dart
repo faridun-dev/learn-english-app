@@ -76,8 +76,10 @@ class _GamesPageState extends State<GamesPage> {
       livesIcons.removeLast();
     });
     _livesCheck();
-    _nextPair();
-    startTimer();
+    if (lives > 0) {
+      _nextPair();
+      startTimer();
+    }
   }
 
   void stopTimer() {
@@ -118,9 +120,11 @@ class _GamesPageState extends State<GamesPage> {
         lives--;
         livesIcons.removeLast();
       });
+      if (lives > 0) {
+        startTimer();
+        _nextPair();
+      }
       _livesCheck();
-      _nextPair();
-      startTimer();
     } else {
       _showAlert();
     }
@@ -227,7 +231,6 @@ class _GamesPageState extends State<GamesPage> {
 
       if (selectedFirstWord != null && selectedSecondWord != null) {
         _checkForMatch();
-        startTimer();
       }
     });
   }
@@ -275,6 +278,11 @@ class _GamesPageState extends State<GamesPage> {
         lives--;
         livesIcons.removeLast();
       });
+
+      if (lives > 0) {
+        startTimer();
+      }
+
       _livesCheck();
     }
   }
