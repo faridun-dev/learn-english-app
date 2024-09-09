@@ -18,20 +18,16 @@ class GamesPage extends StatefulWidget {
 
 class _GamesPageState extends State<GamesPage> {
   int lives = 3;
-  List<Widget> livesIcons = [
-    const Icon(
-      Icons.health_and_safety,
-      size: 35,
-    ),
-    const Icon(
-      Icons.health_and_safety,
-      size: 35,
-    ),
-    const Icon(
-      Icons.health_and_safety,
-      size: 35,
-    ),
-  ];
+  List<Widget> livesIcons = List.generate(
+    3,
+    (_) {
+      return const Icon(
+        Icons.favorite,
+        color: Colors.red,
+        size: 35,
+      );
+    },
+  );
   bool questionMark = true;
   int currentIndex = 0;
   late double _progressValue;
